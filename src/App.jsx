@@ -9,7 +9,6 @@ function App() {
 	const [editingTask, setEditingTask] = useState(null);
 	const [currentSlot, setCurrentSlot] = useState(null);
 
-	// Add state for available teachers and rooms
 	const [teachers] = useState([
 		'Mr. Meezan Chand',
 		'Dr. Remudin Mecuria',
@@ -36,18 +35,20 @@ function App() {
 
 	const handleDrop = (day, hour, task) => {
 		setTasks((prevTasks) => {
-			const key = `${day}-${hour}`;
+			const oldKey = `${task.day}-${task.hour}`;
+			const newKey = `${day}-${hour}`;
 			const newTasks = { ...prevTasks };
 
-			const newTask = {
-				...task,
-				id: `${task.id}-${Date.now()}`,
-			};
-
-			if (!newTasks[key]) {
-				newTasks[key] = [];
+			if (newTasks[oldKey]) {
+				newTasks[oldKey] = newTasks[oldKey].filter((t) => t.id !== task.id);
 			}
-			newTasks[key] = [...newTasks[key], newTask];
+
+			const newTask = { ...task, day, hour };
+
+			if (!newTasks[newKey]) {
+				newTasks[newKey] = [];
+			}
+			newTasks[newKey] = [...newTasks[newKey], newTask];
 
 			return newTasks;
 		});

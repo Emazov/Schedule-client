@@ -16,6 +16,7 @@ export const TimeSlot = ({ day, hour, tasks, onDrop, onTaskDoubleClick }) => {
 				<TaskCard
 					key={task.id}
 					task={task}
+					draggable
 					onDoubleClick={() => onTaskDoubleClick(task, day, hour)}
 				/>
 			))}

@@ -11,30 +11,25 @@ const daysOfWeek = [
 	'Saturday',
 	'Sunday',
 ];
-const hours = Array.from({ length: 12 }, (_, i) => i + 8); // 8AM to 7PM
+const hours = Array.from({ length: 12 }, (_, i) => i + 8); 
 
 export const TaskBoard = ({ tasks, onDrop, onTaskDoubleClick }) => {
 	return (
 		<div className='task-board'>
-			{/* Empty top-left corner */}
 			<div className='grid-header'></div>
 
-			{/* Day headers */}
 			{daysOfWeek.map((day) => (
 				<div key={day} className='grid-header'>
 					{day}
 				</div>
 			))}
 
-			{/* Time slots grid */}
 			{hours.map((hour) => (
 				<React.Fragment key={hour}>
-					{/* Time label column */}
 					<div className='time-label'>
 						{format(new Date().setHours(hour, 0, 0, 0), 'h a')}
 					</div>
 
-					{/* Time slots for each day */}
 					{daysOfWeek.map((day) => {
 						const key = `${day}-${hour}`;
 						const slotTasks = tasks[key] || [];
