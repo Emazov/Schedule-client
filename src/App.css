@@ -1,5 +1,5 @@
 .app {
-	max-width: 1200px;
+	max-width: 1800px;
 	margin: 0 auto;
 	padding: 20px;
 }
@@ -16,9 +16,9 @@
 }
 
 .task-board {
-	flex: 3;
+	flex: 5;
 	display: grid;
-	grid-template-columns: 80px repeat(7, 1fr);
+	grid-template-columns: 90px repeat(6, 1fr);
 	gap: 1px;
 	background-color: #ddd;
 	border: 1px solid #ddd;
@@ -35,8 +35,8 @@
 .time-label {
 	background-color: #fff;
 	padding: 10px;
-	text-align: right;
-	font-size: 0.8em;
+	text-align: center;
+	font-size: 1em;
 	color: #666;
 	border-right: 1px solid #eee;
 }
@@ -58,9 +58,21 @@
 	border-radius: 3px;
 	color: #333;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-	font-size: 0.75em;
+	font-size: 1em;
 	cursor: move;
 	flex-shrink: 0;
+}
+
+/* Task Card Details */
+.task-title {
+	font-weight: bold;
+	margin-bottom: 3px;
+}
+
+.task-teacher,
+.task-room {
+	font-size: 0.8em;
+	font-weight: bold;
 }
 
 .time-slot.hovered {
@@ -191,16 +203,4 @@
 	background: #4CAF50;
 	color: white;
 	border: none;
-}
-
-/* Task Card Details */
-.task-title {
-	font-weight: bold;
-	margin-bottom: 3px;
-}
-
-.task-teacher,
-.task-room {
-	font-size: 0.8em;
-	opacity: 0.8;
 }

@@ -45,18 +45,18 @@ export const TaskPanel = () => {
 
 	return (
 		<div className='task-panel'>
-			<h3>Available Tasks</h3>
+			<h3>Available Lessons</h3>
 
 			<form onSubmit={handleAddTask} className='task-form'>
 				<input
 					type='text'
 					value={newTaskTitle}
 					onChange={(e) => setNewTaskTitle(e.target.value)}
-					placeholder='New task name'
+					placeholder='New lesson name'
 					className='task-input'
 				/>
 				<button type='submit' className='add-task-btn'>
-					Add Task
+					Add
 				</button>
 			</form>
 

@@ -17,7 +17,7 @@ export const TimeSlot = ({ day, hour, tasks, onDrop, onTaskDoubleClick }) => {
 					key={task.id}
 					task={task}
 					draggable
-					onDoubleClick={() => onTaskDoubleClick(task, day, hour)}
+					onDoubleClick={(event) => onTaskDoubleClick(task, day, hour, event)}
 				/>
 			))}
 		</div>
