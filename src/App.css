@@ -47,7 +47,7 @@
 .task-board {
 	flex: 5;
 	display: grid;
-	grid-template-columns: 90px repeat(6, 1fr);
+	grid-template-columns: auto repeat(6, 1fr);
 	gap: 1px;
 	background-color: #ddd;
 	border: 1px solid #ddd;
@@ -75,8 +75,8 @@
 	background-color: #fff;
 	padding: 10px;
 	text-align: center;
-	font-size: 1em;
-	color: #666;
+	font-size: 14px;
+	/* color: #666; */
 	border-right: 1px solid #eee;
 }
 

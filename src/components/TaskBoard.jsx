@@ -72,7 +72,7 @@ export const TaskBoard = ({ tasks, onDrop, onTaskDoubleClick }) => {
 					<div className='time-label'>
 						<p>{hour.slot}</p>
 						<p>
-							{hour.start} <br /> {hour.end}
+							{hour.start}-{hour.end}
 						</p>
 					</div>
 
