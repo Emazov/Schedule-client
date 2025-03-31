@@ -5,6 +5,7 @@
 
 .wrapper {
 	margin: 20px auto;
+	padding: 0 10px;
 	max-width: 1800px;
 }
 
@@ -15,7 +16,7 @@
 
 .header {
 	margin-bottom: 20px;
-	padding: 10px 0 20px;
+	padding: 10px;
 	background-color: #fff;
 }
 
