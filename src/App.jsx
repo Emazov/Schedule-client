@@ -2,13 +2,17 @@ import { useState } from 'react';
 import { TaskBoard } from './components/TaskBoard';
 import { TaskPanel } from './components/TaskPanel';
 import { TaskModal } from './components/TaskModal';
+import TableBoard from './components/TableBoard/TableBoard';
 import './App.css';
+
+const roles = ['admin', 'teacher', 'student'];
 
 function App() {
 	const [tasks, setTasks] = useState({});
 	const [editingTask, setEditingTask] = useState(null);
 	const [currentSlot, setCurrentSlot] = useState(null);
 	const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
+	const [headerRole, setHeaderRole] = useState('student');
 
 	const [teachers] = useState([
 		'Mr. Meezan Chand',
@@ -79,28 +83,58 @@ function App() {
 		setEditingTask(null);
 	};
 
+	const handleChangeRole = (e) => {
+		setHeaderRole(e.target.value);
+	};
+
 	return (
 		<div className='app'>
-			<h1>AIU Schedule</h1>
-			<div className='container'>
-				<TaskBoard
-					tasks={tasks}
-					onDrop={handleDrop}
-					onTaskDoubleClick={handleTaskDoubleClick}
-				/>
-				<TaskPanel />
-			</div>
+			<header className='header'>
+				<div className='header-container'>
+					<img src='./header_aiu_logo.png' alt='' />
+					<h1>AIU Schedule</h1>
+					<select
+						className='header-btn'
+						name='role'
+						value={headerRole}
+						onChange={handleChangeRole}
+					>
+						{roles.map((role) => (
+							<option key={role} value={role}>
+								{role}
+							</option>
+						))}
+					</select>
+				</div>
+			</header>
 
-			{editingTask && (
-				<TaskModal
-					task={editingTask}
-					teachers={teachers}
-					rooms={rooms}
-					onClose={() => setEditingTask(null)}
-					onSave={handleSaveTask}
-					position={modalPosition}
-				/>
-			)}
+			<div className='wrapper'>
+				{headerRole === 'admin' ? (
+					<>
+						<div className='container'>
+							<TaskBoard
+								tasks={tasks}
+								onDrop={handleDrop}
+								onTaskDoubleClick={handleTaskDoubleClick}
+							/>
+							<TaskPanel />
+						</div>
+
+						{editingTask && (
+							<TaskModal
+								task={editingTask}
+								teachers={teachers}
+								rooms={rooms}
+								onClose={() => setEditingTask(null)}
+								onSave={handleSaveTask}
+								position={modalPosition}
+							/>
+						)}
+					</>
+				) : (
+					<TableBoard role={headerRole} />
+				)}
+			</div>
 		</div>
 	);
 }
