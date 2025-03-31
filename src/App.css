@@ -32,6 +32,16 @@
 	border-bottom: 1px solid #eee;
 }
 
+.table-grid-header-dropdown {
+	padding: 5px;
+	text-align: center;
+	outline: none;
+	cursor: pointer;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+} 
+
 .time-label {
 	background-color: #fff;
 	padding: 10px;
