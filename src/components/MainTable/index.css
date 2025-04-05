@@ -1,0 +1,32 @@
+.main_table {
+	flex: 5;
+	display: grid;
+	grid-template-columns: auto repeat(6, 1fr);
+	gap: 1px;
+	background-color: #ccc;
+	border: 1px solid #ccc;
+}
+
+.table_header {
+	padding: 6px;
+	font-weight: bold;
+	text-align: center;
+	background-color: #f0f0f0;
+	border-bottom: 1px solid #ccc;
+
+	&:first-child {
+		border-right: 1px solid #ccc;
+	}
+}
+
+.table_time_label {
+	padding: 10px;
+	text-align: center;
+	background-color: #f0f0f0;
+	border-right: 1px solid #ccc;
+}
+
+.table_time_slot {
+	padding: 4px;
+	background-color: #fff;
+}

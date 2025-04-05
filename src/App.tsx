@@ -1,9 +1,17 @@
+import Header from './components/Header/Header';
+import MainTable from './components/MainTable/MainTable';
+import SidePanel from './components/SidePanel/SidePanel';
+
 import './App.css';
 
 function App() {
 	return (
 		<div className='app'>
-			<h1>New Schedule table</h1>
+			<Header />
+			<div className='container'>
+				<MainTable />
+				<SidePanel />
+			</div>
 		</div>
 	);
 }
