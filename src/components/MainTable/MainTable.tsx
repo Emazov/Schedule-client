@@ -25,18 +25,6 @@ const timeSlots = [
 	{ slot: '12th Hour', start: '17:30', end: '18:10' },
 ];
 
-const groups = [
-	{ id: 'group_COMCEH-24', name: 'COMCEH-24' },
-	{ id: 'group_COMSE-24', name: 'COMSE-24' },
-	{ id: 'group_COMFCI-24', name: 'COMFCI-24' },
-	{ id: 'group_COMSEP-23', name: 'COMSEP-23' },
-	{ id: 'group_COMCEH-23', name: 'COMCEH-23' },
-	{ id: 'group_COMSE-23', name: 'COMSE-23' },
-	{ id: 'group_COMFCI-23', name: 'COMFCI-23' },
-	{ id: 'group_COM-22a', name: 'COM-22a' },
-	{ id: 'group_COM-22b', name: 'COM-22b' },
-	{ id: 'group_COM-21', name: 'COM-21' },
-];
 
 const MainTable = () => {
 	return (
