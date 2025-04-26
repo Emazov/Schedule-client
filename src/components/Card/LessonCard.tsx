@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
 const teachers = [
@@ -9,15 +9,7 @@ const teachers = [
 	'Ms. Mekia Gaso',
 	'Mr.  Zhenishbek Orozakhunov',
 ];
-const rooms = [
-	'BIGLAB',
-	'101',
-	'202',
-	'303',
-	'404',
-	'Lab 1',
-	'Lab 2',
-];
+const rooms = ['BIGLAB', '101', '202', '303', '404', 'Lab 1', 'Lab 2'];
 
 type LessonCardProps = {
 	id: string;
@@ -44,6 +36,8 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 	);
 	const [selectedRoom, setSelectedRoom] = useState(subject.room || rooms[0]);
 
+	const cardRef = useRef<HTMLDivElement>(null);
+
 	const style = {
 		transform: transform
 			? `translate(${transform.x}px, ${transform.y}px)`
@@ -68,6 +62,20 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 		setEditMode(false);
 	};
 
+	useEffect(() => {
+		const handleClickOutside = (e: MouseEvent) => {
+			if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
+				// Если клик был вне карточки — сохраняем изменения
+				handleSave();
+			}
+		};
+
+		document.addEventListener('mousedown', handleClickOutside); // Слушаем клик мышью
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside); // Убираем слушатель при размонтировании
+		};
+	}, [editedTitle, selectedTeacher, selectedRoom]);
+
 	if (editMode) {
 		return (
 			<div
@@ -80,35 +88,37 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 					}
 				}}
 			>
-				<input
-					type='text'
-					value={editedTitle}
-					onChange={(e) => setEditedTitle(e.target.value)}
-					placeholder='Название'
-					className='input'
-				/>
-				<select
-					value={selectedTeacher}
-					onChange={(e) => setSelectedTeacher(e.target.value)}
-					className='select'
-				>
-					{teachers.map((teacher) => (
-						<option key={teacher} value={teacher}>
-							{teacher}
-						</option>
-					))}
-				</select>
-				<select
-					value={selectedRoom}
-					onChange={(e) => setSelectedRoom(e.target.value)}
-					className='select'
-				>
-					{rooms.map((room) => (
-						<option key={room} value={room}>
-							{room}
-						</option>
-					))}
-				</select>
+				<div ref={cardRef}>
+					<input
+						type='text'
+						value={editedTitle}
+						onChange={(e) => setEditedTitle(e.target.value)}
+						placeholder='Название'
+						className='input'
+					/>
+					<select
+						value={selectedTeacher}
+						onChange={(e) => setSelectedTeacher(e.target.value)}
+						className='select'
+					>
+						{teachers.map((teacher) => (
+							<option key={teacher} value={teacher}>
+								{teacher}
+							</option>
+						))}
+					</select>
+					<select
+						value={selectedRoom}
+						onChange={(e) => setSelectedRoom(e.target.value)}
+						className='select'
+					>
+						{rooms.map((room) => (
+							<option key={room} value={room}>
+								{room}
+							</option>
+						))}
+					</select>
+				</div>
 			</div>
 		);
 	}
