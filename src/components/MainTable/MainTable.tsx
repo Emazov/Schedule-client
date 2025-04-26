@@ -22,7 +22,7 @@ const MainTable = ({
 	schedule,
 	setSchedule,
 }: MainTableProps) => {
-	const [cellData, setCellData] = useState<
+	const [_, setCellData] = useState<
 		Record<string, DroppedLesson | null>
 	>({});
 
