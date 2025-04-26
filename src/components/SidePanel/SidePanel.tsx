@@ -1,30 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const defaultTasks = [
-	{ id: '0', title: 'Programming Language 2', color: '#FF9AA2' },
-	{ id: '1', title: 'Calculus 2', color: '#FFB7B2' },
-	{ id: '2', title: 'Discrete Math', color: '#FFDAC1' },
-	{ id: '3', title: 'Design and Analysis of Algorithms', color: '#E2F0CB' },
-	{ id: '4', title: 'Mobile App Development', color: '#C7CEEA' },
-	{ id: '5', title: 'LUNCH TIME', color: '#B5EAD7' },
-];
+interface SidePanelProps {
+	defaultTasks: { id: string; title: string; color: string }[];
+	colorPalette: string[];
+}
 
-const colorPalette = [
-	'#FF9AA2',
-	'#FFB7B2',
-	'#FFDAC1',
-	'#E2F0CB',
-	'#B5EAD7',
-	'#C7CEEA',
-	'#A2D7D8',
-	'#B5B5E5',
-	'#F8B195',
-	'#F67280',
-	'#C06C84',
-	'#6C5B7B',
-];
-
-const SidePanel = () => {
+const SidePanel: React.FC<SidePanelProps> = ({
+	defaultTasks,
+	colorPalette,
+}) => {
 	const [lessons, setLessons] = useState(defaultTasks);
 	const [newLessonTitle, setNewLessonTitle] = useState('');
 
