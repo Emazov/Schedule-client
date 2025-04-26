@@ -1,8 +1,23 @@
 import { useState } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
-const teachers = ['Иванов', 'Петров', 'Сидоров'];
-const rooms = ['101', '202', '303', 'Актовый зал'];
+const teachers = [
+	'Mr. Meezan Chand',
+	'Dr. Remudin Mecuria',
+	'Mr. Hussein Chebsi',
+	'Mr. Dim Shayahmetov',
+	'Ms. Mekia Gaso',
+	'Mr.  Zhenishbek Orozakhunov',
+];
+const rooms = [
+	'BIGLAB',
+	'101',
+	'202',
+	'303',
+	'404',
+	'Lab 1',
+	'Lab 2',
+];
 
 type LessonCardProps = {
 	id: string;
@@ -55,7 +70,16 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 
 	if (editMode) {
 		return (
-			<div ref={setNodeRef} style={style} className='side_lessons_item'>
+			<div
+				ref={setNodeRef}
+				style={style}
+				className='side_lessons_item'
+				onKeyDown={(e) => {
+					if (e.key === 'Enter') {
+						handleSave();
+					}
+				}}
+			>
 				<input
 					type='text'
 					value={editedTitle}
@@ -85,9 +109,6 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 						</option>
 					))}
 				</select>
-				<button onClick={handleSave} className='save_button'>
-					Сохранить
-				</button>
 			</div>
 		);
 	}
@@ -103,7 +124,7 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 		>
 			<div>{subject.title}</div>
 			{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
-			{subject.room && <div className='small_text'>{subject.room}</div>}	
+			{subject.room && <div className='small_text'>{subject.room}</div>}
 		</div>
 	);
 };
