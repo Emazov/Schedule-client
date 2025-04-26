@@ -66,7 +66,11 @@ function App() {
 						schedule={schedule}
 						setSchedule={setSchedule}
 					/>
-					<SidePanel defaultTasks={defaultTasks} colorPalette={colorPalette} />
+					<SidePanel
+						defaultTasks={defaultTasks}
+						colorPalette={colorPalette}
+						setSchedule={setSchedule}
+					/>
 				</div>
 			</DndContext>
 		</div>

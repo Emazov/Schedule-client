@@ -16,21 +16,15 @@ type DroppableCellProps = {
 const DroppableCell = ({ id, lesson, setSchedule }: DroppableCellProps) => {
 	const { setNodeRef } = useDroppable({ id });
 
-	const handleDoubleClick = () => {
-		setSchedule((prev) => {
-			const updated = { ...prev };
-			delete updated[id];
-			return updated;
-		});
-	};
-
 	return (
-		<div
-			ref={setNodeRef}
-			className='table_time_slot'
-			onDoubleClick={handleDoubleClick}
-		>
-			{lesson && <LessonCard subject={lesson} id={id} />}
+		<div ref={setNodeRef} className='table_time_slot'>
+			{lesson && (
+				<LessonCard
+					subject={lesson}
+					id={id}
+					setSchedule={setSchedule}
+				/>
+			)}
 		</div>
 	);
 };

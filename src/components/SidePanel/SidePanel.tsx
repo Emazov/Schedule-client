@@ -4,9 +4,14 @@ import LessonCard from '../Card/LessonCard';
 type SidePanelProps = {
 	defaultTasks: { id: string; title: string; color: string }[];
 	colorPalette: string[];
+	setSchedule: React.Dispatch<React.SetStateAction<{ [cellId: string]: any }>>;
 };
 
-const SidePanel = ({ defaultTasks, colorPalette }: SidePanelProps) => {
+const SidePanel = ({
+	defaultTasks,
+	colorPalette,
+	setSchedule,
+}: SidePanelProps) => {
 	const [lessons, setLessons] = useState(defaultTasks);
 	const [newLessonTitle, setNewLessonTitle] = useState('');
 
@@ -41,7 +46,12 @@ const SidePanel = ({ defaultTasks, colorPalette }: SidePanelProps) => {
 			</form>
 			<div className='side_lessons_list'>
 				{lessons.map((subject) => (
-					<LessonCard key={subject.id} id={subject.id} subject={subject} />
+					<LessonCard
+						key={subject.id}
+						id={subject.id}
+						subject={subject}
+						setSchedule={setSchedule}
+					/>
 				))}
 			</div>
 		</div>

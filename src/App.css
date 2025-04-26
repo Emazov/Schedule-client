@@ -68,6 +68,31 @@ body {
 	padding: 6px 12px;
 	border-radius: 4px;
 	cursor: pointer;
+
+	.input {
+		width: 100%;
+		padding: 4px;
+		margin-bottom: 4px;
+	}
+
+	.select {
+		width: 100%;
+		margin-bottom: 4px;
+	}
+
+	.save_button {
+		width: 100%;
+		padding: 4px;
+		background-color: #4caf50;
+		color: white;
+		border: none;
+		cursor: pointer;
+	}
+
+	.small_text {
+		font-size: 0.75rem;
+		color: #666;
+	}
 }
 
 .no_select {

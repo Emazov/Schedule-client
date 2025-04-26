@@ -1,4 +1,8 @@
+import { useState } from 'react';
 import { useDraggable } from '@dnd-kit/core';
+
+const teachers = ['Иванов', 'Петров', 'Сидоров'];
+const rooms = ['101', '202', '303', 'Актовый зал'];
 
 type LessonCardProps = {
 	id: string;
@@ -6,14 +10,24 @@ type LessonCardProps = {
 		id: string;
 		title: string;
 		color: string;
+		teacher?: string;
+		room?: string;
 	};
+	setSchedule: React.Dispatch<React.SetStateAction<{ [cellId: string]: any }>>;
 };
 
-const LessonCard = ({ id, subject }: LessonCardProps) => {
+const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 	const { attributes, listeners, setNodeRef, transform } = useDraggable({
 		id,
 		data: { title: subject.title, color: subject.color },
 	});
+
+	const [editMode, setEditMode] = useState(false);
+	const [editedTitle, setEditedTitle] = useState(subject.title);
+	const [selectedTeacher, setSelectedTeacher] = useState(
+		subject.teacher || teachers[0]
+	);
+	const [selectedRoom, setSelectedRoom] = useState(subject.room || rooms[0]);
 
 	const style = {
 		transform: transform
@@ -22,15 +36,74 @@ const LessonCard = ({ id, subject }: LessonCardProps) => {
 		backgroundColor: subject.color,
 	};
 
+	const handleDoubleClick = () => {
+		setEditMode(true);
+	};
+
+	const handleSave = () => {
+		setSchedule((prev) => ({
+			...prev,
+			[id]: {
+				...prev[id],
+				title: editedTitle,
+				teacher: selectedTeacher,
+				room: selectedRoom,
+			},
+		}));
+		setEditMode(false);
+	};
+
+	if (editMode) {
+		return (
+			<div ref={setNodeRef} style={style} className='side_lessons_item'>
+				<input
+					type='text'
+					value={editedTitle}
+					onChange={(e) => setEditedTitle(e.target.value)}
+					placeholder='Название'
+					className='input'
+				/>
+				<select
+					value={selectedTeacher}
+					onChange={(e) => setSelectedTeacher(e.target.value)}
+					className='select'
+				>
+					{teachers.map((teacher) => (
+						<option key={teacher} value={teacher}>
+							{teacher}
+						</option>
+					))}
+				</select>
+				<select
+					value={selectedRoom}
+					onChange={(e) => setSelectedRoom(e.target.value)}
+					className='select'
+				>
+					{rooms.map((room) => (
+						<option key={room} value={room}>
+							{room}
+						</option>
+					))}
+				</select>
+				<button onClick={handleSave} className='save_button'>
+					Сохранить
+				</button>
+			</div>
+		);
+	}
+
 	return (
 		<div
 			ref={setNodeRef}
 			style={style}
 			{...listeners}
 			{...attributes}
-			className='side_lessons_item no_select'
+			className='side_lessons_item'
+			onDoubleClick={handleDoubleClick}
 		>
-			{subject.title}
+			<div>{subject.title}</div>
+			{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
+			{subject.room && <div className='small_text'>{subject.room}</div>}	
 		</div>
 	);
 };
