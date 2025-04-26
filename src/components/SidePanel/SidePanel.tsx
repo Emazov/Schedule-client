@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
+import LessonCard from '../Card/LessonCard';
 
-interface SidePanelProps {
+type SidePanelProps = {
 	defaultTasks: { id: string; title: string; color: string }[];
 	colorPalette: string[];
-}
+};
 
-const SidePanel: React.FC<SidePanelProps> = ({
-	defaultTasks,
-	colorPalette,
-}) => {
+const SidePanel = ({ defaultTasks, colorPalette }: SidePanelProps) => {
 	const [lessons, setLessons] = useState(defaultTasks);
 	const [newLessonTitle, setNewLessonTitle] = useState('');
 
@@ -43,13 +41,7 @@ const SidePanel: React.FC<SidePanelProps> = ({
 			</form>
 			<div className='side_lessons_list'>
 				{lessons.map((subject) => (
-					<div
-						key={subject.id}
-						className='side_lessons_item'
-						style={{ backgroundColor: subject.color }}
-					>
-						{subject.title}
-					</div>
+					<LessonCard key={subject.id} id={subject.id} subject={subject} />
 				))}
 			</div>
 		</div>
