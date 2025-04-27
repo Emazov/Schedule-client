@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import LessonCard from '../Card/LessonCard';
 
+import { defaultTasks, colorPalette } from '../../defaultData';
+
 type SidePanelProps = {
-	defaultTasks: { id: string; title: string; color: string }[];
-	colorPalette: string[];
 	setSchedule: React.Dispatch<React.SetStateAction<{ [cellId: string]: any }>>;
 };
 
-const SidePanel = ({
-	defaultTasks,
-	colorPalette,
-	setSchedule,
-}: SidePanelProps) => {
+const SidePanel = ({ setSchedule }: SidePanelProps) => {
 	const [lessons, setLessons] = useState(defaultTasks);
 	const [newLessonTitle, setNewLessonTitle] = useState('');
 

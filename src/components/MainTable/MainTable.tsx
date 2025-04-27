@@ -1,53 +1,38 @@
 import React, { useState } from 'react';
-import { useDndMonitor } from '@dnd-kit/core';
 import DroppableCell from '../DroppableCell';
 import './index.css';
 
+import { daysOfWeek, timeSlots, groups } from '../../defaultData';
+
 type MainTableProps = {
-	daysOfWeek: string[];
-	timeSlots: { slot: string; start: string; end: string }[];
 	schedule: { [cellId: string]: any };
 	setSchedule: React.Dispatch<React.SetStateAction<{ [cellId: string]: any }>>;
 };
 
-type DroppedLesson = {
-	id: string;
-	title: string;
-	color: string;
-};
-
-const MainTable = ({
-	daysOfWeek,
-	timeSlots,
-	schedule,
-	setSchedule,
-}: MainTableProps) => {
-	const [_, setCellData] = useState<
-		Record<string, DroppedLesson | null>
-	>({});
-
-	// Слушаем событие drop
-	useDndMonitor({
-		onDragEnd(event) {
-			const { over, active } = event;
-
-			if (over && active) {
-				const cellId = over.id as string;
-				const lesson = active.data?.current?.subject as DroppedLesson;
-
-				if (lesson) {
-					setCellData((prev) => ({
-						...prev,
-						[cellId]: lesson, // записываем в конкретную ячейку урок
-					}));
-				}
-			}
-		},
-	});
+const MainTable = ({ schedule, setSchedule }: MainTableProps) => {
+	const [selectedGroup, setSelectedGroup] = useState(groups[0]);
 
 	return (
 		<div className='main_table'>
-			<div className='table_header'>GROUP</div>
+			<div className='table_header'>
+				<select
+					value={selectedGroup.title}
+					onChange={(e) => {
+						const selected = groups.find(
+							(group) => group.title === e.target.value
+						);
+						if (selected) setSelectedGroup(selected);
+					}}
+					onFocus={(e) => e.target.blur()}
+					className='select'
+				>
+					{groups.map((group) => (
+						<option key={group.groupId} value={group.title}>
+							{group.title}
+						</option>
+					))}
+				</select>
+			</div>
 			{daysOfWeek.map((day) => (
 				<div key={day} className='table_header'>
 					{day}

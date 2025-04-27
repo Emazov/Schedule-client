@@ -6,10 +6,7 @@ import SidePanel from './components/SidePanel/SidePanel';
 import './App.css';
 
 import {
-	daysOfWeek,
-	timeSlots,
 	defaultTasks,
-	colorPalette,
 } from './defaultData';
 
 function App() {
@@ -61,14 +58,10 @@ function App() {
 			<DndContext onDragEnd={handleDragEnd}>
 				<div className='container'>
 					<MainTable
-						daysOfWeek={daysOfWeek}
-						timeSlots={timeSlots}
 						schedule={schedule}
 						setSchedule={setSchedule}
 					/>
 					<SidePanel
-						defaultTasks={defaultTasks}
-						colorPalette={colorPalette}
 						setSchedule={setSchedule}
 					/>
 				</div>

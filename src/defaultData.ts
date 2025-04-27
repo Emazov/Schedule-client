@@ -45,3 +45,19 @@ export const colorPalette = [
 	'#C06C84',
 	'#6C5B7B',
 ];
+
+export const teachers = [
+	'Mr. Meezan Chand',
+	'Dr. Remudin Mecuria',
+	'Mr. Hussein Chebsi',
+	'Mr. Dim Shayahmetov',
+	'Ms. Mekia Gaso',
+	'Mr.  Zhenishbek Orozakhunov',
+];
+export const rooms = ['BIGLAB', '101', '202', '303', '404', 'Lab 1', 'Lab 2'];
+
+export const groups = [
+	{id: '0', groupId: 'group_1', title: 'Group 1'},
+	{id: '1', groupId: 'group_2', title: 'Group 2'},
+	{id: '2', groupId: 'group_3', title: 'Group 3'},
+]

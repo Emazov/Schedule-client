@@ -1,15 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
-const teachers = [
-	'Mr. Meezan Chand',
-	'Dr. Remudin Mecuria',
-	'Mr. Hussein Chebsi',
-	'Mr. Dim Shayahmetov',
-	'Ms. Mekia Gaso',
-	'Mr.  Zhenishbek Orozakhunov',
-];
-const rooms = ['BIGLAB', '101', '202', '303', '404', 'Lab 1', 'Lab 2'];
+
+import { teachers, rooms } from '../../defaultData';
 
 type LessonCardProps = {
 	id: string;
@@ -93,12 +86,14 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 						type='text'
 						value={editedTitle}
 						onChange={(e) => setEditedTitle(e.target.value)}
+						onFocus={(e) => e.target.blur()}
 						placeholder='Название'
 						className='input'
 					/>
 					<select
 						value={selectedTeacher}
 						onChange={(e) => setSelectedTeacher(e.target.value)}
+						onFocus={(e) => e.target.blur()}
 						className='select'
 					>
 						{teachers.map((teacher) => (
@@ -110,6 +105,7 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 					<select
 						value={selectedRoom}
 						onChange={(e) => setSelectedRoom(e.target.value)}
+						onFocus={(e) => e.target.blur()}
 						className='select'
 					>
 						{rooms.map((room) => (
