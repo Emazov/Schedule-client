@@ -1,54 +1,34 @@
-import { useState } from 'react';
 import { DndContext, DragEndEvent } from '@dnd-kit/core';
 import Header from './components/Header/Header';
 import MainTable from './components/MainTable/MainTable';
 import SidePanel from './components/SidePanel/SidePanel';
 import './App.css';
 
-import {
-	defaultTasks,
-} from './defaultData';
+import { useScheduleStore } from './store/store.ts';
 
 function App() {
-	const [schedule, setSchedule] = useState<{ [cellId: string]: any }>({});
+	const { activeGroupId, addLessonToCell, swapLessons, availableLessons } =
+		useScheduleStore();
 
 	const handleDragEnd = (event: DragEndEvent) => {
 		const { active, over } = event;
-
 		if (!over) return;
 
-		const activeId = active.id;
-		const overId = over.id;
+		const activeId = active.id.toString();
+		const overId = over.id.toString();
 
-		// Если тащим элемент с панели (id начинается с 'custom-' или число)
 		const isFromPanel =
-			activeId.toString().startsWith('custom-') ||
-			!activeId.toString().includes('-');
+			activeId.startsWith('custom-') || !activeId.includes('-');
 
 		if (isFromPanel) {
-			// Если переносим с панели в таблицу
-			setSchedule((prev) => ({
-				...prev,
-				[overId]: defaultTasks.find((t) => t.id === activeId) || {
-					id: activeId,
-					title: active.data.current?.title,
-					color: active.data.current?.color,
-				},
-			}));
+			const lesson = availableLessons.find((l) => l.id === activeId) || {
+				id: activeId,
+				title: active.data.current?.title,
+				color: active.data.current?.color,
+			};
+			addLessonToCell(activeGroupId, overId, lesson);
 		} else {
-			// Перемещение или обмен между ячейками
-			setSchedule((prev) => {
-				const updated = { ...prev };
-
-				const fromLesson = updated[activeId];
-				const toLesson = updated[overId];
-
-				// Обмен
-				updated[activeId] = toLesson;
-				updated[overId] = fromLesson;
-
-				return updated;
-			});
+			swapLessons(activeGroupId, activeId, overId);
 		}
 	};
 
@@ -57,13 +37,8 @@ function App() {
 			<Header />
 			<DndContext onDragEnd={handleDragEnd}>
 				<div className='container'>
-					<MainTable
-						schedule={schedule}
-						setSchedule={setSchedule}
-					/>
-					<SidePanel
-						setSchedule={setSchedule}
-					/>
+					<MainTable />
+					<SidePanel />
 				</div>
 			</DndContext>
 		</div>

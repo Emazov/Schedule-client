@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
-
+import { useScheduleStore } from '../../store/store.ts';
 import { teachers, rooms } from '../../defaultData';
 
 type LessonCardProps = {
@@ -13,10 +13,10 @@ type LessonCardProps = {
 		teacher?: string;
 		room?: string;
 	};
-	setSchedule: React.Dispatch<React.SetStateAction<{ [cellId: string]: any }>>;
 };
 
-const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
+const LessonCard = ({ id, subject }: LessonCardProps) => {
+	const { activeGroupId, schedules, addLessonToCell } = useScheduleStore();
 	const { attributes, listeners, setNodeRef, transform } = useDraggable({
 		id,
 		data: { title: subject.title, color: subject.color },
@@ -43,29 +43,24 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 	};
 
 	const handleSave = () => {
-		setSchedule((prev) => ({
-			...prev,
-			[id]: {
-				...prev[id],
-				title: editedTitle,
-				teacher: selectedTeacher,
-				room: selectedRoom,
-			},
-		}));
+		addLessonToCell(activeGroupId, id, {
+			...schedules[activeGroupId]?.[id]!,
+			title: editedTitle,
+			teacher: selectedTeacher,
+			room: selectedRoom,
+		});
 		setEditMode(false);
 	};
 
 	useEffect(() => {
 		const handleClickOutside = (e: MouseEvent) => {
 			if (cardRef.current && !cardRef.current.contains(e.target as Node)) {
-				// Если клик был вне карточки — сохраняем изменения
 				handleSave();
 			}
 		};
-
-		document.addEventListener('mousedown', handleClickOutside); // Слушаем клик мышью
+		document.addEventListener('mousedown', handleClickOutside);
 		return () => {
-			document.removeEventListener('mousedown', handleClickOutside); // Убираем слушатель при размонтировании
+			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, [editedTitle, selectedTeacher, selectedRoom]);
 
@@ -74,7 +69,7 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 			<div
 				ref={setNodeRef}
 				style={style}
-				className='side_lessons_item'
+				className='side_lessons_item no_select'
 				onKeyDown={(e) => {
 					if (e.key === 'Enter') {
 						handleSave();
@@ -125,7 +120,7 @@ const LessonCard = ({ id, subject, setSchedule }: LessonCardProps) => {
 			style={style}
 			{...listeners}
 			{...attributes}
-			className='side_lessons_item'
+			className='side_lessons_item no_select'
 			onDoubleClick={handleDoubleClick}
 		>
 			<div>{subject.title}</div>

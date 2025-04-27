@@ -1,33 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DroppableCell from '../DroppableCell';
 import './index.css';
 
+import { useScheduleStore } from '../../store/store.ts';
 import { daysOfWeek, timeSlots, groups } from '../../defaultData';
 
-type MainTableProps = {
-	schedule: { [cellId: string]: any };
-	setSchedule: React.Dispatch<React.SetStateAction<{ [cellId: string]: any }>>;
-};
+const MainTable = () => {
+	const { activeGroupId, setActiveGroup, schedules } = useScheduleStore();
 
-const MainTable = ({ schedule, setSchedule }: MainTableProps) => {
-	const [selectedGroup, setSelectedGroup] = useState(groups[0]);
+	const selectedGroup = groups.find((g) => g.groupId === activeGroupId)!;
 
 	return (
 		<div className='main_table'>
 			<div className='table_header'>
 				<select
-					value={selectedGroup.title}
-					onChange={(e) => {
-						const selected = groups.find(
-							(group) => group.title === e.target.value
-						);
-						if (selected) setSelectedGroup(selected);
-					}}
+					value={selectedGroup.groupId}
+					onChange={(e) => setActiveGroup(e.target.value)}
 					onFocus={(e) => e.target.blur()}
 					className='select'
 				>
 					{groups.map((group) => (
-						<option key={group.groupId} value={group.title}>
+						<option key={group.groupId} value={group.groupId}>
 							{group.title}
 						</option>
 					))}
@@ -51,8 +44,7 @@ const MainTable = ({ schedule, setSchedule }: MainTableProps) => {
 							<DroppableCell
 								key={cellId}
 								id={cellId}
-								lesson={schedule[cellId]}
-								setSchedule={setSchedule}
+								lesson={schedules[activeGroupId]?.[cellId] || null}
 							/>
 						);
 					})}

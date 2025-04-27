@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import LessonCard from '../Card/LessonCard';
 
-import { defaultTasks, colorPalette } from '../../defaultData';
+import { useScheduleStore } from '../../store/store.ts';
+import { colorPalette } from '../../defaultData';
 
-type SidePanelProps = {
-	setSchedule: React.Dispatch<React.SetStateAction<{ [cellId: string]: any }>>;
-};
-
-const SidePanel = ({ setSchedule }: SidePanelProps) => {
-	const [lessons, setLessons] = useState(defaultTasks);
+const SidePanel = () => {
+	const { availableLessons, addNewLesson } = useScheduleStore();
 	const [newLessonTitle, setNewLessonTitle] = useState('');
 
 	const handleAddTask = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,8 +17,7 @@ const SidePanel = ({ setSchedule }: SidePanelProps) => {
 			title: newLessonTitle,
 			color: colorPalette[Math.floor(Math.random() * colorPalette.length)],
 		};
-
-		setLessons([...lessons, newTask]);
+		addNewLesson(newTask);
 		setNewLessonTitle('');
 	};
 
@@ -41,13 +37,8 @@ const SidePanel = ({ setSchedule }: SidePanelProps) => {
 				</button>
 			</form>
 			<div className='side_lessons_list'>
-				{lessons.map((subject) => (
-					<LessonCard
-						key={subject.id}
-						id={subject.id}
-						subject={subject}
-						setSchedule={setSchedule}
-					/>
+				{availableLessons.map((subject) => (
+					<LessonCard key={subject.id} id={subject.id} subject={subject} />
 				))}
 			</div>
 		</div>
