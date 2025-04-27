@@ -45,7 +45,7 @@ const LessonCard = ({ id, subject }: LessonCardProps) => {
 	const handleSave = () => {
 		addLessonToCell(activeGroupId, id, {
 			...schedules[activeGroupId]?.[id]!,
-			title: editedTitle,
+			title: editedTitle ? editedTitle : subject.title,
 			teacher: selectedTeacher,
 			room: selectedRoom,
 		});
@@ -77,12 +77,11 @@ const LessonCard = ({ id, subject }: LessonCardProps) => {
 				}}
 			>
 				<div ref={cardRef}>
-					<input
-						type='text'
+					<textarea
+						rows={1}
 						value={editedTitle}
 						onChange={(e) => setEditedTitle(e.target.value)}
-						onFocus={(e) => e.target.blur()}
-						placeholder='Название'
+						placeholder='Title...'
 						className='input'
 					/>
 					<select
@@ -123,7 +122,7 @@ const LessonCard = ({ id, subject }: LessonCardProps) => {
 			className='side_lessons_item no_select'
 			onDoubleClick={handleDoubleClick}
 		>
-			<div>{subject.title}</div>
+			<div className='item_title'>{subject.title}</div>
 			{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
 			{subject.room && <div className='small_text'>{subject.room}</div>}
 		</div>
