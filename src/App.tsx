@@ -35,12 +35,12 @@ function App() {
 	return (
 		<div className='app'>
 			<Header />
-			<DndContext onDragEnd={handleDragEnd}>
-				<div className='container'>
+			<div className='container'>
+				<DndContext onDragEnd={handleDragEnd}>
 					<MainTable />
 					<SidePanel />
-				</div>
-			</DndContext>
+				</DndContext>
+			</div>
 		</div>
 	);
 }
