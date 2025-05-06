@@ -29,9 +29,11 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	const [editMode, setEditMode] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(subject.title);
 	const [selectedTeacher, setSelectedTeacher] = useState(
-		subject.teacher || teachers[0]
+		subject.teacher || teachers[0].name
 	);
-	const [selectedRoom, setSelectedRoom] = useState(subject.room || rooms[0]);
+	const [selectedRoom, setSelectedRoom] = useState(
+		subject.room || rooms[0].name
+	);
 
 	const cardRef = useRef<HTMLDivElement>(null);
 
@@ -101,8 +103,8 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 						className='select'
 					>
 						{teachers.map((teacher) => (
-							<option key={teacher} value={teacher}>
-								{teacher}
+							<option key={teacher.id} value={teacher.name}>
+								{teacher.name}
 							</option>
 						))}
 					</select>
@@ -113,8 +115,8 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 						className='select'
 					>
 						{rooms.map((room) => (
-							<option key={room} value={room}>
-								{room}
+							<option key={room.id} value={room.name}>
+								{room.name}
 							</option>
 						))}
 					</select>

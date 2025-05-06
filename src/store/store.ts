@@ -26,10 +26,10 @@ import { defaultTasks, groups } from '../defaultData';
 
 export const useScheduleStore = create<ScheduleStore>((set) => ({
 	schedules: groups.reduce((acc, group) => {
-		acc[group.groupId] = {};
+		acc[group.id] = {};
 		return acc;
 	}, {} as { [groupId: string]: Schedule }),
-	activeGroupId: groups[0].groupId,
+	activeGroupId: groups[0].id,
 	availableLessons: [...defaultTasks],
 
 	setActiveGroup: (groupId) => set({ activeGroupId: groupId }),

@@ -8,27 +8,27 @@ import { daysOfWeek, timeSlots, groups } from '../../defaultData';
 const MainTable = () => {
 	const { activeGroupId, setActiveGroup, schedules } = useScheduleStore();
 
-	const selectedGroup = groups.find((g) => g.groupId === activeGroupId)!;
+	const selectedGroup = groups.find((g) => g.id === activeGroupId)!;
 
 	return (
 		<div className='main_table'>
 			<div className='table_header'>
 				<select
-					value={selectedGroup.groupId}
+					value={selectedGroup.id}
 					onChange={(e) => setActiveGroup(e.target.value)}
 					onFocus={(e) => e.target.blur()}
 					className='select'
 				>
 					{groups.map((group) => (
-						<option key={group.groupId} value={group.groupId}>
+						<option key={group.id} value={group.id}>
 							{group.title}
 						</option>
 					))}
 				</select>
 			</div>
 			{daysOfWeek.map((day) => (
-				<div key={day} className='table_header'>
-					{day}
+				<div key={day.id} className='table_header'>
+					{day.title}
 				</div>
 			))}
 
@@ -38,7 +38,7 @@ const MainTable = () => {
 						{time.slot} <br /> {time.start}-{time.end}
 					</div>
 					{daysOfWeek.map((day) => {
-						const cellId = `${day}-${time.slot}`;
+						const cellId = `${day.id}-${time.slot}`;
 
 						return (
 							<DroppableCell

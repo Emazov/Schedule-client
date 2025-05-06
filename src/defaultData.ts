@@ -1,10 +1,10 @@
 export const daysOfWeek = [
-	'Monday',
-	'Tuesday',
-	'Wednesday',
-	'Thursday',
-	'Friday',
-	'Saturday',
+	{ id: 'mon', title: 'Monday' },
+	{ id: 'tue', title: 'Tuesday' },
+	{ id: 'wed', title: 'Wednesday' },
+	{ id: 'thu', title: 'Thursday' },
+	{ id: 'fri', title: 'Friday' },
+	{ id: 'sat', title: 'Saturday' },
 ];
 
 export const timeSlots = [
@@ -23,12 +23,12 @@ export const timeSlots = [
 ];
 
 export const defaultTasks = [
-	{ id: '0', title: 'Programming Language 2', color: '#FF9AA2' },
-	{ id: '1', title: 'Calculus 2', color: '#FFB7B2' },
-	{ id: '2', title: 'Discrete Math', color: '#FFDAC1' },
-	{ id: '3', title: 'Design and Analysis of Algorithms', color: '#E2F0CB' },
-	{ id: '4', title: 'Mobile App Development', color: '#C7CEEA' },
-	{ id: '5', title: 'LUNCH TIME', color: '#B5EAD7' },
+	{ id: 'programming_lang_2', title: 'Programming Language 2', color: '#FF9AA2' },
+	{ id: 'calculus_2', title: 'Calculus 2', color: '#FFB7B2' },
+	{ id: 'discrete_math', title: 'Discrete Math', color: '#FFDAC1' },
+	{ id: 'daa', title: 'Design and Analysis of Algorithms', color: '#E2F0CB' },
+	{ id: 'mobile_dev', title: 'Mobile App Development', color: '#C7CEEA' },
+	{ id: 'lunch_time', title: 'LUNCH TIME', color: '#B5EAD7' },
 ];
 
 export const colorPalette = [
@@ -47,25 +47,34 @@ export const colorPalette = [
 ];
 
 export const teachers = [
-	'Mr. Meezan Chand',
-	'Dr. Remudin Mecuria',
-	'Mr. Hussein Chebsi',
-	'Mr. Dim Shayahmetov',
-	'Ms. Mekia Gaso',
-	'Mr.  Zhenishbek Orozakhunov',
+	{ id: 'andrei_ermakov', name: 'Andrei Ermakov' },
+	{ id: 'meezan_chand', name: 'Mr. Meezan Chand' },
+	{ id: 'remudin_mecuria', name: 'Dr. Remudin Mecuria' },
+	{ id: 'hussein_chebsi', name: 'Mr. Hussein Chebsi' },
+	{ id: 'dim_shayahmetov', name: 'Mr. Dim Shayahmetov' },
+	{ id: 'mekia_gaso', name: 'Ms. Mekia Gaso' },
+	{ id: 'zhenishbek_orozakhunov', name: 'Mr. Zhenishbek Orozakhunov' },
 ];
-export const rooms = ['BIGLAB', '101', '202', '303', '404', 'Lab 1', 'Lab 2'];
+
+export const rooms = [
+	{ id: 'BIGLAB', name: 'BIGLAB' },
+	{ id: '101', name: '101' },
+	{ id: '202', name: '202' },
+	{ id: '203', name: '203' },
+	{ id: '204', name: '204' },
+	{ id: '205', name: '205' },
+	{ id: '210', name: '210' },];
 
 export const groups = [
-	{ id: '0', groupId: 'COMCEH_24', title: 'COMCEH-24' },
-	{ id: '1', groupId: 'COMSE_24', title: 'COMSE-24' },
-	{ id: '2', groupId: 'COMFCI_24', title: 'COMFCI-24' },
-	{ id: '3', groupId: '2_COMSEP_23', title: '2 COMSEP-23' },
-	{ id: '4', groupId: 'COMCEH_23', title: 'COMCEH-23' },
-	{ id: '5', groupId: 'COMSE_23', title: 'COMSE-23' },
-	{ id: '6', groupId: 'COMFCI_23', title: 'COMFCI-23' },
-	{ id: '7', groupId: 'COM_22a', title: 'COM-22a' },
-	{ id: '8', groupId: 'COM_22b', title: 'COM-22b' },
-	{ id: '9', groupId: 'COM_21', title: 'COM-21' },
+	{ id: 'COMCEH_24', title: 'COMCEH-24' },
+	{ id: 'COMSE_24', title: 'COMSE-24' },
+	{ id: 'COMFCI_24', title: 'COMFCI-24' },
+	{ id: '2_COMSEP_23', title: '2 COMSEP-23' },
+	{ id: 'COMCEH_23', title: 'COMCEH-23' },
+	{ id: 'COMSE_23', title: 'COMSE-23' },
+	{ id: 'COMFCI_23', title: 'COMFCI-23' },
+	{ id: 'COM_22a', title: 'COM-22a' },
+	{ id: 'COM_22b', title: 'COM-22b' },
+	{ id: 'COM_21', title: 'COM-21' },
 ]
 
