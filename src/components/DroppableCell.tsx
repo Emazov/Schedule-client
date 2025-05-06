@@ -19,7 +19,7 @@ const DroppableCell = ({ id, lesson }: DroppableCellProps) => {
 
 	return (
 		<div ref={setNodeRef} className='table_time_slot'>
-			{lesson && <LessonCard id={id} subject={lesson} />}
+			{lesson && <LessonCard id={id} subject={lesson} isInTable={true} />}
 		</div>
 	);
 };

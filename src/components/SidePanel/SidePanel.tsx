@@ -4,6 +4,8 @@ import LessonCard from '../Card/LessonCard';
 import { useScheduleStore } from '../../store/store.ts';
 import { colorPalette } from '../../defaultData';
 
+import './index.css';
+
 const SidePanel = () => {
 	const { availableLessons, addNewLesson } = useScheduleStore();
 	const [newLessonTitle, setNewLessonTitle] = useState('');

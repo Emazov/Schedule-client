@@ -37,8 +37,8 @@ function App() {
 			<Header />
 			<div className='container'>
 				<DndContext onDragEnd={handleDragEnd}>
-					<MainTable />
 					<SidePanel />
+					<MainTable />
 				</DndContext>
 			</div>
 		</div>

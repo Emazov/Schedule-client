@@ -57,7 +57,15 @@ export const teachers = [
 export const rooms = ['BIGLAB', '101', '202', '303', '404', 'Lab 1', 'Lab 2'];
 
 export const groups = [
-	{id: '0', groupId: 'group_1', title: 'Group 1'},
-	{id: '1', groupId: 'group_2', title: 'Group 2'},
-	{id: '2', groupId: 'group_3', title: 'Group 3'},
+	{ id: '0', groupId: 'COMCEH_24', title: 'COMCEH-24' },
+	{ id: '1', groupId: 'COMSE_24', title: 'COMSE-24' },
+	{ id: '2', groupId: 'COMFCI_24', title: 'COMFCI-24' },
+	{ id: '3', groupId: '2_COMSEP_23', title: '2 COMSEP-23' },
+	{ id: '4', groupId: 'COMCEH_23', title: 'COMCEH-23' },
+	{ id: '5', groupId: 'COMSE_23', title: 'COMSE-23' },
+	{ id: '6', groupId: 'COMFCI_23', title: 'COMFCI-23' },
+	{ id: '7', groupId: 'COM_22a', title: 'COM-22a' },
+	{ id: '8', groupId: 'COM_22b', title: 'COM-22b' },
+	{ id: '9', groupId: 'COM_21', title: 'COM-21' },
 ]
+

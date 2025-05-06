@@ -4,6 +4,8 @@ import { useDraggable } from '@dnd-kit/core';
 import { useScheduleStore } from '../../store/store.ts';
 import { teachers, rooms } from '../../defaultData';
 
+import './index.css';
+
 type LessonCardProps = {
 	id: string;
 	subject: {
@@ -13,15 +15,17 @@ type LessonCardProps = {
 		teacher?: string;
 		room?: string;
 	};
+	isInTable?: boolean;
 };
 
-const LessonCard = ({ id, subject }: LessonCardProps) => {
+const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	const { activeGroupId, schedules, addLessonToCell } = useScheduleStore();
 	const { attributes, listeners, setNodeRef, transform } = useDraggable({
 		id,
 		data: { title: subject.title, color: subject.color },
 	});
 
+	const [showWarning, setShowWarning] = useState(false);
 	const [editMode, setEditMode] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(subject.title);
 	const [selectedTeacher, setSelectedTeacher] = useState(
@@ -39,6 +43,12 @@ const LessonCard = ({ id, subject }: LessonCardProps) => {
 	};
 
 	const handleDoubleClick = () => {
+		if (!isInTable) {
+			setShowWarning(true);
+			setTimeout(() => setShowWarning(false), 2000);
+			return;
+		}
+
 		setEditMode(true);
 	};
 
@@ -114,18 +124,24 @@ const LessonCard = ({ id, subject }: LessonCardProps) => {
 	}
 
 	return (
-		<div
-			ref={setNodeRef}
-			style={style}
-			{...listeners}
-			{...attributes}
-			className='side_lessons_item no_select'
-			onDoubleClick={handleDoubleClick}
-		>
-			<div className='item_title'>{subject.title}</div>
-			{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
-			{subject.room && <div className='small_text'>{subject.room}</div>}
-		</div>
+		<>
+			<div
+				ref={setNodeRef}
+				style={style}
+				{...listeners}
+				{...attributes}
+				className='side_lessons_item no_select'
+				onDoubleClick={handleDoubleClick}
+			>
+				<div className='item_title'>{subject.title}</div>
+				{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
+				{subject.room && <div className='small_text'>{subject.room}</div>}
+			</div>
+
+			{showWarning && (
+				<div className='warning_text'>Move to table for edit 🧩</div>
+			)}
+		</>
 	);
 };
 
