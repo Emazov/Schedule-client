@@ -26,7 +26,7 @@ export const defaultTasks = [
 	{ id: 'programming_lang_2', title: 'Programming Language 2', color: '#FF9AA2' },
 	{ id: 'calculus_2', title: 'Calculus 2', color: '#FFB7B2' },
 	{ id: 'discrete_math', title: 'Discrete Math', color: '#FFDAC1' },
-	{ id: 'daa', title: 'Design and Analysis of Algorithms', color: '#E2F0CB' },
+	{ id: 'design_and_analysis_of_algorithms', title: 'Design and Analysis of Algorithms', color: '#E2F0CB' },
 	{ id: 'mobile_dev', title: 'Mobile App Development', color: '#C7CEEA' },
 	{ id: 'lunch_time', title: 'LUNCH TIME', color: '#B5EAD7' },
 ];
@@ -61,7 +61,7 @@ export const rooms = [
 	{ id: '101', name: '101' },
 	{ id: '202', name: '202' },
 	{ id: '203', name: '203' },
-	{ id: '204', name: '204' },
+	{ id: '204', name: '204' },	
 	{ id: '205', name: '205' },
 	{ id: '210', name: '210' },];
 
