@@ -5,9 +5,10 @@ import SidePanel from './components/SidePanel/SidePanel';
 import './App.css';
 
 import { useScheduleStore } from './store/store.ts';
+import { timeSlots } from './defaultData.ts';
 
 function App() {
-	const { activeGroupId, addLessonToCell, swapLessons, availableLessons } =
+	const { activeDayId, addLessonToCell, swapLessons, availableLessons, schedules } =
 		useScheduleStore();
 
 	const handleDragEnd = (event: DragEndEvent) => {
@@ -17,6 +18,19 @@ function App() {
 		const activeId = active.id.toString();
 		const overId = over.id.toString();
 
+		const [overGroup, overTime] = overId.split('-');
+		const duration = active.data.current?.duration ? parseInt(active.data.current.duration) : 1;
+
+		// Проверяем, не выходит ли урок за пределы временной сетки
+		const overTimeIndex = timeSlots.findIndex(slot => slot.id === overTime);
+		if (overTimeIndex + duration > timeSlots.length) return;
+
+		// Проверяем, нет ли уроков в ячейках, которые будут объединены
+		for (let i = 1; i < duration; i++) {
+			const nextCellId = `${overGroup}-${timeSlots[overTimeIndex + i].id}`;
+			if (schedules[activeDayId]?.[nextCellId]) return;
+		}
+
 		const isFromPanel =
 			activeId.startsWith('custom-') || !activeId.includes('-');
 
@@ -25,10 +39,11 @@ function App() {
 				id: activeId,
 				title: active.data.current?.title,
 				color: active.data.current?.color,
+				duration: active.data.current?.duration
 			};
-			addLessonToCell(activeGroupId, overId, lesson);
+			addLessonToCell(activeDayId, overId, lesson);
 		} else {
-			swapLessons(activeGroupId, activeId, overId);
+			swapLessons(activeDayId, activeId, overId);
 		}
 	};
 
@@ -37,8 +52,8 @@ function App() {
 			<Header />
 			<div className='container'>
 				<DndContext onDragEnd={handleDragEnd}>
-					<MainTable />
 					<SidePanel />
+					<MainTable />
 				</DndContext>
 			</div>
 		</div>

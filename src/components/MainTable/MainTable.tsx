@@ -6,45 +6,64 @@ import { useScheduleStore } from '../../store/store.ts';
 import { daysOfWeek, timeSlots, groups } from '../../defaultData';
 
 const MainTable = () => {
-	const { activeGroupId, setActiveGroup, schedules } = useScheduleStore();
+	const { activeDayId, setActiveDay, schedules } = useScheduleStore();
 
-	const selectedGroup = groups.find((g) => g.groupId === activeGroupId)!;
+	const occupiedCells = new Set<string>();
+
+	Object.entries(schedules[activeDayId] || {}).forEach(([cellId, lesson]) => {
+		if (lesson?.duration && lesson.duration > 1) {
+			const [groupId, timeId] = cellId.split("-");
+			const timeStartIdx = timeSlots.findIndex(t => t.id === timeId);
+
+			for (let i = 1; i < lesson.duration; i++) {
+				const blockedTime = timeSlots[timeStartIdx + i];
+				if (blockedTime) {
+					occupiedCells.add(`${groupId}-${blockedTime.id}`);
+				}
+			}
+		}
+	});
 
 	return (
-		<div className='main_table'>
+		<div className='main_table' style={{ gridTemplateColumns: `auto repeat(${timeSlots.length}, 1fr)` }}>
 			<div className='table_header'>
 				<select
-					value={selectedGroup.groupId}
-					onChange={(e) => setActiveGroup(e.target.value)}
+					value={activeDayId}
+					onChange={(e) => setActiveDay(e.target.value)}
 					onFocus={(e) => e.target.blur()}
 					className='select'
 				>
-					{groups.map((group) => (
-						<option key={group.groupId} value={group.groupId}>
-							{group.title}
+					{daysOfWeek.map((day) => (
+						<option key={day.id} value={day.id}>
+							{day.title}
 						</option>
 					))}
 				</select>
 			</div>
-			{daysOfWeek.map((day) => (
-				<div key={day} className='table_header'>
-					{day}
+
+			{timeSlots.map((time) => (
+				<div key={time.id} id={time.id} className='table_header'>
+					{time.slot} <br /> {time.start}-{time.end}
 				</div>
 			))}
 
-			{timeSlots.map((time) => (
-				<React.Fragment key={time.slot}>
-					<div className='table_time_label'>
-						{time.slot} <br /> {time.start}-{time.end}
+			{groups.map((group, groupIdx) => (
+				<React.Fragment key={group.id}>
+					<div id={group.id} className='table_time_label' style={{ gridRow: groupIdx + 2 }}>
+						{group.title}
 					</div>
-					{daysOfWeek.map((day) => {
-						const cellId = `${day}-${time.slot}`;
+
+					{timeSlots.map((time, timeIdx) => {
+						const cellId = `${group.id}-${time.id}`;
+
+						if (occupiedCells.has(cellId)) return null;
 
 						return (
 							<DroppableCell
+								col={timeIdx + 2}
 								key={cellId}
 								id={cellId}
-								lesson={schedules[activeGroupId]?.[cellId] || null}
+								lesson={schedules[activeDayId]?.[cellId] || null}
 							/>
 						);
 					})}
