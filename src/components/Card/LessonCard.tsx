@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 
 import { useScheduleStore } from '../../store/store.ts';
-import { teachers, rooms } from '../../defaultData';
+import { timeSlots, teachers, rooms } from '../../defaultData';
 
 import './index.css';
 
@@ -63,7 +63,47 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 		setEditMode(true);
 	};
 
+	function canExtendLesson(
+		cellId: string,
+		duration: number,
+		schedules: Record<string, any>
+	): boolean {
+		if (duration <= 1) return true;
+
+		const [groupId, timeId] = cellId.split("-");
+		const startIndex = timeSlots.findIndex((t) => t.id === timeId);
+		if (startIndex === -1) return false;
+
+		for (let i = 1; i < duration; i++) {
+			const nextSlot = timeSlots[startIndex + i];
+			if (!nextSlot) return false;
+
+			const nextCellId = `${groupId}-${nextSlot.id}`;
+			if (schedules[nextCellId]) return false;
+		}
+
+		return true;
+	}
+
 	const handleSave = () => {
+		if (!canExtendLesson(id, selectedDuration, schedules[activeDayId])) {
+			alert("⛔ Невозможно установить такую длительность — следующие ячейки заняты!");
+
+			const previousDuration = schedules[activeDayId]?.[id]?.duration || 1;
+
+			addLessonToCell(activeDayId, id, {
+				...schedules[activeDayId]?.[id]!,
+				title: editedTitle ? editedTitle : subject.title,
+				teacher: selectedTeacher,
+				room: selectedRoom,
+				duration: previousDuration,
+			});
+
+			setSelectedDuration(previousDuration);
+			setEditMode(false);
+			return;
+		}
+
 		addLessonToCell(activeDayId, id, {
 			...schedules[activeDayId]?.[id]!,
 			title: editedTitle ? editedTitle : subject.title,
@@ -111,8 +151,8 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 				}}
 			>
 				<div ref={cardRef}>
-					<textarea
-						rows={1}
+					<input
+						type='text'
 						value={editedTitle}
 						onChange={(e) => setEditedTitle(e.target.value)}
 						placeholder='Title...'
@@ -189,14 +229,13 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 				style={style}
 				{...listeners}
 				{...attributes}
-				id={subject.id}
+				id={`${subject.id}-${id}`}
 				className='lessons_item no_select'
 				onDoubleClick={handleDoubleClick}
 			>
 				<div className='item_title'>{subject.title}</div>
 				{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
 				{subject.room && <div className='small_text'>{subject.room}</div>}
-				{subject.duration && <div className='small_text'>{subject.duration}</div>}
 			</div>
 
 			{showWarning && (

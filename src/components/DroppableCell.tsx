@@ -7,6 +7,7 @@ type DroppedLesson = {
 	color: string;
 	teacher?: string;
 	room?: string;
+	duration?: number;
 };
 
 type DroppableCellProps = {
@@ -19,14 +20,25 @@ type DroppableCellProps = {
 const DroppableCell = ({ id, lesson, row, col }: DroppableCellProps) => {
 	const { setNodeRef, isOver } = useDroppable({ id });
 
+	const gridStyleMerged = lesson?.duration && lesson.duration > 1
+		? { gridColumn: `${col} / ${col + lesson.duration}` }
+		: {};
+
+	const backgroundHighlight = isOver
+		? { backgroundColor: 'rgba(0, 0, 0, 0.1)' }
+		: {};
+
+	const finalStyle = {
+		...gridStyleMerged,
+		...backgroundHighlight,
+	};
+
 	return (
 		<div
 			ref={setNodeRef}
 			id={id}
 			className='table_time_slot'
-			style={{ backgroundColor: isOver ? 'rgba(0, 0, 0, 0.1)' : '' }}
-			row-data={row}
-			col-data={col}
+			style={finalStyle}
 		>
 			{lesson && <LessonCard id={id} subject={lesson} isInTable={true} />}
 		</div>

@@ -8,6 +8,22 @@ import { daysOfWeek, timeSlots, groups } from '../../defaultData';
 const MainTable = () => {
 	const { activeDayId, setActiveDay, schedules } = useScheduleStore();
 
+	const occupiedCells = new Set<string>();
+
+	Object.entries(schedules[activeDayId] || {}).forEach(([cellId, lesson]) => {
+		if (lesson?.duration && lesson.duration > 1) {
+			const [groupId, timeId] = cellId.split("-");
+			const timeStartIdx = timeSlots.findIndex(t => t.id === timeId);
+
+			for (let i = 1; i < lesson.duration; i++) {
+				const blockedTime = timeSlots[timeStartIdx + i];
+				if (blockedTime) {
+					occupiedCells.add(`${groupId}-${blockedTime.id}`);
+				}
+			}
+		}
+	});
+
 	return (
 		<div className='main_table' style={{ gridTemplateColumns: `auto repeat(${timeSlots.length}, 1fr)` }}>
 			<div className='table_header'>
@@ -39,7 +55,8 @@ const MainTable = () => {
 
 					{timeSlots.map((time, timeIdx) => {
 						const cellId = `${group.id}-${time.id}`;
-						// const rowCol = `${groupIdx + 2}-${timeIdx + 2}`
+
+						if (occupiedCells.has(cellId)) return null;
 
 						return (
 							<DroppableCell
