@@ -75,3 +75,34 @@
 		transform: translateY(-5px);
 	}
 }
+
+.select-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.clear-button {
+	position: absolute;
+	right: 5px;
+	background: none;
+	border: none;
+	color: #666;
+	font-size: 16px;
+	cursor: pointer;
+	padding: 0 5px;
+}
+
+.clear-button:hover {
+	color: #333;
+}
+
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background: transparent;
+	padding: 0 5px;
+	outline: none;
+
+}

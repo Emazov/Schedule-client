@@ -14,15 +14,16 @@ type LessonCardProps = {
 		color: string;
 		teacher?: string;
 		room?: string;
+		duration?: number;
 	};
 	isInTable?: boolean;
 };
 
 const durationOptions = [
-	{ value: "1_hour", label: "1" },
-	{ value: "2_hour", label: "2" },
-	{ value: "3_hour", label: "3" },
-	{ value: "4_hour", label: "4" },
+	{ value: 1, label: "1" },
+	{ value: 2, label: "2" },
+	{ value: 3, label: "3" },
+	{ value: 4, label: "4" },
 ];
 
 const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
@@ -36,12 +37,12 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	const [editMode, setEditMode] = useState(false);
 	const [editedTitle, setEditedTitle] = useState(subject.title);
 	const [selectedTeacher, setSelectedTeacher] = useState(
-		subject.teacher || teachers[0].name
+		subject.teacher
 	);
 	const [selectedRoom, setSelectedRoom] = useState(
 		subject.room || rooms[0].name
 	);
-	const [selectedDuration, setSelectedDuration] = useState(durationOptions[0].value);
+	const [selectedDuration, setSelectedDuration] = useState(subject.duration || durationOptions[0].value);
 
 	const cardRef = useRef<HTMLDivElement>(null);
 
@@ -68,6 +69,7 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 			title: editedTitle ? editedTitle : subject.title,
 			teacher: selectedTeacher,
 			room: selectedRoom,
+			duration: selectedDuration,
 		});
 		setEditMode(false);
 	};
@@ -82,15 +84,16 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 		return () => {
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
-	}, [editedTitle, selectedTeacher, selectedRoom]);
+	}, [editedTitle, selectedTeacher, selectedRoom, selectedDuration]);
 
 	useEffect(() => {
 		if (isInTable) {
 			const currentLesson = schedules[activeDayId]?.[id];
 			if (currentLesson) {
 				setEditedTitle(currentLesson.title);
-				setSelectedTeacher(currentLesson.teacher || teachers[0].name);
-				setSelectedRoom(currentLesson.room || rooms[0].name);
+				setSelectedTeacher(currentLesson.teacher ?? '');
+				setSelectedRoom(currentLesson.room ?? '');
+				setSelectedDuration(currentLesson.duration || durationOptions[0].value);
 			}
 		}
 	}, [schedules, activeDayId, id]);
@@ -115,30 +118,50 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 						placeholder='Title...'
 						className='input'
 					/>
-					<select
-						value={selectedTeacher}
-						onChange={(e) => setSelectedTeacher(e.target.value)}
-						onFocus={(e) => e.target.blur()}
-						className='select'
-					>
-						{teachers.map((teacher) => (
-							<option key={teacher.id} value={teacher.name}>
-								{teacher.name}
-							</option>
-						))}
-					</select>
-					<select
-						value={selectedRoom}
-						onChange={(e) => setSelectedRoom(e.target.value)}
-						onFocus={(e) => e.target.blur()}
-						className='select'
-					>
-						{rooms.map((room) => (
-							<option key={room.id} value={room.name}>
-								{room.name}
-							</option>
-						))}
-					</select>
+					<div className='select-container'>
+						<select
+							value={selectedTeacher}
+							onChange={(e) => setSelectedTeacher(e.target.value)}
+							className='select'
+						>
+							<option value=''>None</option>
+							{teachers.map((teacher) => (
+								<option key={teacher.id} value={teacher.name}>
+									{teacher.name}
+								</option>
+							))}
+						</select>
+						<button
+							className='clear-button'
+							onClick={() => {
+								setSelectedTeacher('');
+							}}
+						>
+							×
+						</button>
+					</div>
+					<div className='select-container'>
+						<select
+							value={selectedRoom}
+							onChange={(e) => setSelectedRoom(e.target.value)}
+							className='select'
+						>
+							<option value=''>None</option>
+							{rooms.map((room) => (
+								<option key={room.id} value={room.name}>
+									{room.name}
+								</option>
+							))}
+						</select>
+						<button
+							className='clear-button'
+							onClick={() => {
+								setSelectedRoom('');
+							}}
+						>
+							×
+						</button>
+					</div>
 					<div className='duration_select'>
 						{durationOptions.map(dur => (
 							<label key={dur.value} className='mr-1'>
@@ -173,6 +196,7 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 				<div className='item_title'>{subject.title}</div>
 				{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
 				{subject.room && <div className='small_text'>{subject.room}</div>}
+				{subject.duration && <div className='small_text'>{subject.duration}</div>}
 			</div>
 
 			{showWarning && (

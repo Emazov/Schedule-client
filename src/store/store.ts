@@ -4,6 +4,7 @@ type Lesson = {
 	id: string;
 	title: string;
 	color: string;
+	duration?: number;
 	teacher?: string;
 	room?: string;
 };
