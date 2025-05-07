@@ -18,6 +18,13 @@ type LessonCardProps = {
 	isInTable?: boolean;
 };
 
+const durationOptions = [
+	{ value: "1_hour", label: "1" },
+	{ value: "2_hour", label: "2" },
+	{ value: "3_hour", label: "3" },
+	{ value: "4_hour", label: "4" },
+];
+
 const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	const { activeDayId, schedules, addLessonToCell } = useScheduleStore();
 	const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -34,6 +41,7 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	const [selectedRoom, setSelectedRoom] = useState(
 		subject.room || rooms[0].name
 	);
+	const [selectedDuration, setSelectedDuration] = useState(durationOptions[0].value);
 
 	const cardRef = useRef<HTMLDivElement>(null);
 
@@ -131,6 +139,21 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 							</option>
 						))}
 					</select>
+					<div className='duration_select'>
+						{durationOptions.map(dur => (
+							<label key={dur.value} className='mr-1'>
+								<input
+									type='radio'
+									name='duration'
+									value={dur.value}
+									checked={selectedDuration === dur.value}
+									onChange={() => setSelectedDuration(dur.value)}
+									className='mr-1'
+								/>
+								<span>{dur.label}</span>
+							</label>
+						))}
+					</div>
 				</div>
 			</div>
 		);

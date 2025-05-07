@@ -31,17 +31,20 @@ const MainTable = () => {
 				</div>
 			))}
 
-			{groups.map((group) => (
+			{groups.map((group, groupIdx) => (
 				<React.Fragment key={group.id}>
-					<div id={group.id} className='table_time_label'>
+					<div id={group.id} className='table_time_label' style={{ gridRow: groupIdx + 2 }}>
 						{group.title}
 					</div>
 
-					{timeSlots.map((time) => {
+					{timeSlots.map((time, timeIdx) => {
 						const cellId = `${group.id}-${time.id}`;
+						// const rowCol = `${groupIdx + 2}-${timeIdx + 2}`
 
 						return (
 							<DroppableCell
+								row={groupIdx + 2}
+								col={timeIdx + 2}
 								key={cellId}
 								id={cellId}
 								lesson={schedules[activeDayId]?.[cellId] || null}
