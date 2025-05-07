@@ -51,6 +51,7 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 			? `translate(${transform.x}px, ${transform.y}px)`
 			: undefined,
 		backgroundColor: subject.color,
+		minWidth: editMode ? '215px' : '',
 	};
 
 	const handleDoubleClick = () => {
@@ -212,6 +213,7 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 				id={`${subject.id}-${id}`}
 				className='lessons_item no_select'
 				onDoubleClick={handleDoubleClick}
+				duration-data={subject?.duration}
 			>
 				<div className='item_title'>{subject.title}</div>
 				{subject.teacher && <div className='small_text'>{subject.teacher}</div>}

@@ -38,7 +38,6 @@ const DroppableCell = ({ id, lesson, col }: DroppableCellProps) => {
 			id={id}
 			className='table_time_slot'
 			style={finalStyle}
-			duration-data={lesson?.duration}
 		>
 			{lesson && <LessonCard id={id} subject={lesson} isInTable={true} />}
 		</div>
