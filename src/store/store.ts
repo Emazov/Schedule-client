@@ -13,49 +13,49 @@ type Schedule = {
 };
 
 type ScheduleStore = {
-	schedules: { [groupId: string]: Schedule };
-	activeGroupId: string;
-	setActiveGroup: (groupId: string) => void;
-	addLessonToCell: (groupId: string, cellId: string, lesson: Lesson) => void;
-	swapLessons: (groupId: string, fromCellId: string, toCellId: string) => void;
+	schedules: { [dayId: string]: Schedule };
+	activeDayId: string;
+	setActiveDay: (dayId: string) => void;
+	addLessonToCell: (dayId: string, cellId: string, lesson: Lesson) => void;
+	swapLessons: (dayId: string, fromCellId: string, toCellId: string) => void;
 	addNewLesson: (lesson: Lesson) => void;
 	availableLessons: Lesson[];
 };
 
-import { defaultTasks, groups } from '../defaultData';
+import { defaultTasks, daysOfWeek } from '../defaultData';
 
 export const useScheduleStore = create<ScheduleStore>((set) => ({
-	schedules: groups.reduce((acc, group) => {
-		acc[group.id] = {};
+	schedules: daysOfWeek.reduce((acc, day) => {
+		acc[day.id] = {};
 		return acc;
-	}, {} as { [groupId: string]: Schedule }),
-	activeGroupId: groups[0].id,
+	}, {} as { [dayId: string]: Schedule }),
+	activeDayId: daysOfWeek[0].id,
 	availableLessons: [...defaultTasks],
 
-	setActiveGroup: (groupId) => set({ activeGroupId: groupId }),
+	setActiveDay: (dayId) => set({ activeDayId: dayId }),
 
-	addLessonToCell: (groupId, cellId, lesson) =>
+	addLessonToCell: (dayId, cellId, lesson) =>
 		set((state) => ({
 			schedules: {
 				...state.schedules,
-				[groupId]: {
-					...state.schedules[groupId],
+				[dayId]: {
+					...state.schedules[dayId],
 					[cellId]: lesson,
 				},
 			},
 		})),
 
-	swapLessons: (groupId, fromCellId, toCellId) =>
+	swapLessons: (dayId, fromCellId, toCellId) =>
 		set((state) => {
-			const groupSchedule = { ...state.schedules[groupId] };
-			const temp = groupSchedule[fromCellId] || null;
-			groupSchedule[fromCellId] = groupSchedule[toCellId] || null;
-			groupSchedule[toCellId] = temp;
+			const daySchedule = { ...state.schedules[dayId] };
+			const temp = daySchedule[fromCellId] || null;
+			daySchedule[fromCellId] = daySchedule[toCellId] || null;
+			daySchedule[toCellId] = temp;
 
 			return {
 				schedules: {
 					...state.schedules,
-					[groupId]: groupSchedule,
+					[dayId]: daySchedule,
 				},
 			};
 		}),

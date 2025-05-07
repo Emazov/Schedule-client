@@ -57,24 +57,24 @@ export const teachers = [
 ];
 
 export const rooms = [
-	{ id: 'BIGLAB', name: 'BIGLAB' },
+	{ id: 'biglab', name: 'BIGLAB' },
 	{ id: '101', name: '101' },
 	{ id: '202', name: '202' },
 	{ id: '203', name: '203' },
-	{ id: '204', name: '204' },	
+	{ id: '204', name: '204' },
 	{ id: '205', name: '205' },
 	{ id: '210', name: '210' },];
 
 export const groups = [
-	{ id: 'COMCEH_24', title: 'COMCEH-24' },
-	{ id: 'COMSE_24', title: 'COMSE-24' },
-	{ id: 'COMFCI_24', title: 'COMFCI-24' },
-	{ id: '2_COMSEP_23', title: '2 COMSEP-23' },
-	{ id: 'COMCEH_23', title: 'COMCEH-23' },
-	{ id: 'COMSE_23', title: 'COMSE-23' },
-	{ id: 'COMFCI_23', title: 'COMFCI-23' },
-	{ id: 'COM_22a', title: 'COM-22a' },
-	{ id: 'COM_22b', title: 'COM-22b' },
-	{ id: 'COM_21', title: 'COM-21' },
+	{ id: 'comceh_24', title: 'COMCEH-24' },
+	{ id: 'comse_24', title: 'COMSE-24' },
+	{ id: 'comfci_24', title: 'COMFCI-24' },
+	{ id: '2_comsep_23', title: '2 COMSEP-23' },
+	{ id: 'comceh_23', title: 'COMCEH-23' },
+	{ id: 'comse_23', title: 'COMSE-23' },
+	{ id: 'comfci_23', title: 'COMFCI-23' },
+	{ id: 'com_22a', title: 'COM-22a' },
+	{ id: 'com_22b', title: 'COM-22b' },
+	{ id: 'com_21', title: 'COM-21' },
 ]
 

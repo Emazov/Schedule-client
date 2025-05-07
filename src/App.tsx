@@ -7,7 +7,7 @@ import './App.css';
 import { useScheduleStore } from './store/store.ts';
 
 function App() {
-	const { activeGroupId, addLessonToCell, swapLessons, availableLessons } =
+	const { activeDayId, addLessonToCell, swapLessons, availableLessons } =
 		useScheduleStore();
 
 	const handleDragEnd = (event: DragEndEvent) => {
@@ -26,9 +26,9 @@ function App() {
 				title: active.data.current?.title,
 				color: active.data.current?.color,
 			};
-			addLessonToCell(activeGroupId, overId, lesson);
+			addLessonToCell(activeDayId, overId, lesson);
 		} else {
-			swapLessons(activeGroupId, activeId, overId);
+			swapLessons(activeDayId, activeId, overId);
 		}
 	};
 

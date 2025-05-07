@@ -6,45 +6,45 @@ import { useScheduleStore } from '../../store/store.ts';
 import { daysOfWeek, timeSlots, groups } from '../../defaultData';
 
 const MainTable = () => {
-	const { activeGroupId, setActiveGroup, schedules } = useScheduleStore();
-
-	const selectedGroup = groups.find((g) => g.id === activeGroupId)!;
+	const { activeDayId, setActiveDay, schedules } = useScheduleStore();
 
 	return (
-		<div className='main_table'>
+		<div className='main_table' style={{ gridTemplateColumns: `auto repeat(${timeSlots.length}, 1fr)` }}>
 			<div className='table_header'>
 				<select
-					value={selectedGroup.id}
-					onChange={(e) => setActiveGroup(e.target.value)}
+					value={activeDayId}
+					onChange={(e) => setActiveDay(e.target.value)}
 					onFocus={(e) => e.target.blur()}
 					className='select'
 				>
-					{groups.map((group) => (
-						<option key={group.id} value={group.id}>
-							{group.title}
+					{daysOfWeek.map((day) => (
+						<option key={day.id} value={day.id}>
+							{day.title}
 						</option>
 					))}
 				</select>
 			</div>
-			{daysOfWeek.map((day) => (
-				<div key={day.id} className='table_header'>
-					{day.title}
+
+			{timeSlots.map((time) => (
+				<div key={time.id} id={time.id} className='table_header'>
+					{time.slot} <br /> {time.start}-{time.end}
 				</div>
 			))}
 
-			{timeSlots.map((time) => (
-				<React.Fragment key={time.slot}>
-					<div className='table_time_label'>
-						{time.slot} <br /> {time.start}-{time.end}
+			{groups.map((group) => (
+				<React.Fragment key={group.id}>
+					<div id={group.id} className='table_time_label'>
+						{group.title}
 					</div>
-					{daysOfWeek.map((day) => {
-						const cellId = `${day.id}-${time.slot}`;
+
+					{timeSlots.map((time) => {
+						const cellId = `${group.id}-${time.id}`;
 
 						return (
 							<DroppableCell
 								key={cellId}
 								id={cellId}
-								lesson={schedules[activeGroupId]?.[cellId] || null}
+								lesson={schedules[activeDayId]?.[cellId] || null}
 							/>
 						);
 					})}

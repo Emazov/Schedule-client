@@ -19,7 +19,7 @@ type LessonCardProps = {
 };
 
 const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
-	const { activeGroupId, schedules, addLessonToCell } = useScheduleStore();
+	const { activeDayId, schedules, addLessonToCell } = useScheduleStore();
 	const { attributes, listeners, setNodeRef, transform } = useDraggable({
 		id,
 		data: { title: subject.title, color: subject.color },
@@ -55,8 +55,8 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	};
 
 	const handleSave = () => {
-		addLessonToCell(activeGroupId, id, {
-			...schedules[activeGroupId]?.[id]!,
+		addLessonToCell(activeDayId, id, {
+			...schedules[activeDayId]?.[id]!,
 			title: editedTitle ? editedTitle : subject.title,
 			teacher: selectedTeacher,
 			room: selectedRoom,
@@ -78,21 +78,21 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 
 	useEffect(() => {
 		if (isInTable) {
-			const currentLesson = schedules[activeGroupId]?.[id];
+			const currentLesson = schedules[activeDayId]?.[id];
 			if (currentLesson) {
 				setEditedTitle(currentLesson.title);
 				setSelectedTeacher(currentLesson.teacher || teachers[0].name);
 				setSelectedRoom(currentLesson.room || rooms[0].name);
 			}
 		}
-	}, [schedules, activeGroupId, id]);
+	}, [schedules, activeDayId, id]);
 
 	if (editMode) {
 		return (
 			<div
 				ref={setNodeRef}
 				style={style}
-				className='side_lessons_item no_select'
+				className='lessons_item no_select'
 				onKeyDown={(e) => {
 					if (e.key === 'Enter') {
 						handleSave();
@@ -143,7 +143,8 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 				style={style}
 				{...listeners}
 				{...attributes}
-				className='side_lessons_item no_select'
+				id={subject.id}
+				className='lessons_item no_select'
 				onDoubleClick={handleDoubleClick}
 			>
 				<div className='item_title'>{subject.title}</div>

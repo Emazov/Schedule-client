@@ -1,8 +1,7 @@
-.side_lessons_item {
+.lessons_item {
 	padding: 6px 12px;
 	border-radius: 4px;
 	cursor: pointer;
-	position: relative;
 }
 
 .item_title {
