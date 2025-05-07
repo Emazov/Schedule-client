@@ -8,18 +8,18 @@ export const daysOfWeek = [
 ];
 
 export const timeSlots = [
-	{ slot: '1st Hour', start: '09:00', end: '09:55' },
-	{ slot: '2nd Hour', start: '10:00', end: '10:40' },
-	{ slot: '3rd Hour', start: '10:45', end: '11:25' },
-	{ slot: '4th Hour', start: '11:30', end: '12:10' },
-	{ slot: '5th Hour', start: '12:15', end: '12:55' },
-	{ slot: '6th Hour', start: '13:00', end: '13:40' },
-	{ slot: '7th Hour', start: '13:45', end: '14:25' },
-	{ slot: '8th Hour', start: '14:30', end: '15:10' },
-	{ slot: '9th Hour', start: '15:15', end: '15:55' },
-	{ slot: '10th Hour', start: '16:00', end: '16:40' },
-	{ slot: '11th Hour', start: '16:45', end: '17:25' },
-	{ slot: '12th Hour', start: '17:30', end: '18:10' },
+	{ id: '1_hour', slot: '1st Hour', start: '09:00', end: '09:55' },
+	{ id: '2_hour', slot: '2nd Hour', start: '10:00', end: '10:40' },
+	{ id: '3_hour', slot: '3rd Hour', start: '10:45', end: '11:25' },
+	{ id: '4_hour', slot: '4th Hour', start: '11:30', end: '12:10' },
+	{ id: '5_hour', slot: '5th Hour', start: '12:15', end: '12:55' },
+	{ id: '6_hour', slot: '6th Hour', start: '13:00', end: '13:40' },
+	{ id: '7_hour', slot: '7th Hour', start: '13:45', end: '14:25' },
+	{ id: '8_hour', slot: '8th Hour', start: '14:30', end: '15:10' },
+	{ id: '9_hour', slot: '9th Hour', start: '15:15', end: '15:55' },
+	{ id: '10_hour', slot: '10th Hour', start: '16:00', end: '16:40' },
+	{ id: '11_hour', slot: '11th Hour', start: '16:45', end: '17:25' },
+	{ id: '12_hour', slot: '12th Hour', start: '17:30', end: '18:10' },
 ];
 
 export const defaultTasks = [

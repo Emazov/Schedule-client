@@ -76,6 +76,17 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 		};
 	}, [editedTitle, selectedTeacher, selectedRoom]);
 
+	useEffect(() => {
+		if (isInTable) {
+			const currentLesson = schedules[activeGroupId]?.[id];
+			if (currentLesson) {
+				setEditedTitle(currentLesson.title);
+				setSelectedTeacher(currentLesson.teacher || teachers[0].name);
+				setSelectedRoom(currentLesson.room || rooms[0].name);
+			}
+		}
+	}, [schedules, activeGroupId, id]);
+
 	if (editMode) {
 		return (
 			<div
