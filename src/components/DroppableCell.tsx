@@ -17,10 +17,17 @@ type DroppableCellProps = {
 };
 
 const DroppableCell = ({ id, lesson, row, col }: DroppableCellProps) => {
-	const { setNodeRef } = useDroppable({ id });
+	const { setNodeRef, isOver } = useDroppable({ id });
 
 	return (
-		<div ref={setNodeRef} id={id} className='table_time_slot' row-data={row} col-data={col}>
+		<div
+			ref={setNodeRef}
+			id={id}
+			className='table_time_slot'
+			style={{ backgroundColor: isOver ? 'rgba(0, 0, 0, 0.1)' : '' }}
+			row-data={row}
+			col-data={col}
+		>
 			{lesson && <LessonCard id={id} subject={lesson} isInTable={true} />}
 		</div>
 	);
