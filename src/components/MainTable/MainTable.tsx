@@ -60,7 +60,6 @@ const MainTable = () => {
 
 						return (
 							<DroppableCell
-								row={groupIdx + 2}
 								col={timeIdx + 2}
 								key={cellId}
 								id={cellId}

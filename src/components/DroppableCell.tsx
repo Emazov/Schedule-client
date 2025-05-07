@@ -13,11 +13,10 @@ type DroppedLesson = {
 type DroppableCellProps = {
 	id: string;
 	lesson: DroppedLesson | null;
-	row: number;
 	col: number;
 };
 
-const DroppableCell = ({ id, lesson, row, col }: DroppableCellProps) => {
+const DroppableCell = ({ id, lesson, col }: DroppableCellProps) => {
 	const { setNodeRef, isOver } = useDroppable({ id });
 
 	const gridStyleMerged = lesson?.duration && lesson.duration > 1
