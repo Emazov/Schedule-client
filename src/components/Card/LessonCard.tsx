@@ -158,53 +158,34 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 						placeholder='Title...'
 						className='input'
 					/>
-					<div className='select-container'>
-						<select
-							value={selectedTeacher}
-							onChange={(e) => setSelectedTeacher(e.target.value)}
-							className='select'
-						>
-							<option value=''>None</option>
-							{teachers.map((teacher) => (
-								<option key={teacher.id} value={teacher.name}>
-									{teacher.name}
-								</option>
-							))}
-						</select>
-						<button
-							className='clear-button'
-							onClick={() => {
-								setSelectedTeacher('');
-							}}
-						>
-							×
-						</button>
-					</div>
-					<div className='select-container'>
-						<select
-							value={selectedRoom}
-							onChange={(e) => setSelectedRoom(e.target.value)}
-							className='select'
-						>
-							<option value=''>None</option>
-							{rooms.map((room) => (
-								<option key={room.id} value={room.name}>
-									{room.name}
-								</option>
-							))}
-						</select>
-						<button
-							className='clear-button'
-							onClick={() => {
-								setSelectedRoom('');
-							}}
-						>
-							×
-						</button>
-					</div>
+					<select
+						value={selectedTeacher}
+						onChange={(e) => setSelectedTeacher(e.target.value)}
+						className='select'
+					>
+						<option value=''>Teacher</option>
+						{teachers.map((teacher) => (
+							<option key={teacher.id} value={teacher.name}>
+								{teacher.name}
+							</option>
+						))}
+					</select>
+					<select
+						value={selectedRoom}
+						onChange={(e) => setSelectedRoom(e.target.value)}
+						className='select'
+					>
+						<option value=''>Room</option>
+						{rooms.map((room) => (
+							<option key={room.id} value={room.name}>
+								{room.name}
+							</option>
+						))}
+					</select>
 					<div className='duration_select'>
 						{durationOptions.map(dur => (
-							<label key={dur.value} className='mr-1'>
+							<label key={dur.value}>
+								<span className='mr-1'>{dur.label}</span>
 								<input
 									type='radio'
 									name='duration'
@@ -213,7 +194,6 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 									onChange={() => setSelectedDuration(dur.value)}
 									className='mr-1'
 								/>
-								<span>{dur.label}</span>
 							</label>
 						))}
 					</div>

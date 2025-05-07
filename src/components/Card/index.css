@@ -72,11 +72,6 @@
 	}
 }
 
-.select-container {
-	position: relative;
-	display: flex;
-	align-items: center;
-}
 
 .clear-button {
 	position: absolute;
@@ -94,11 +89,10 @@
 }
 
 select {
+	padding: 0 5px;
 	appearance: none;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	background: transparent;
-	padding: 0 5px;
 	outline: none;
-
 }
