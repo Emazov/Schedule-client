@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DroppableCell from '../DroppableCell';
 import './index.css';
+import { useDndMonitor } from '@dnd-kit/core';
 
 import { useScheduleStore } from '../../store/store.ts';
 import { daysOfWeek, timeSlots, groups } from '../../defaultData';
 
 const MainTable = () => {
 	const { activeDayId, setActiveDay, schedules } = useScheduleStore();
+	const [draggingCellId, setDraggingCellId] = useState<string | null>(null);
 
 	const occupiedCells = new Set<string>();
 
+	useDndMonitor({
+		onDragStart: (event) => {
+			setDraggingCellId(event.active.id.toString());
+		},
+		onDragEnd: () => {
+			setDraggingCellId(null);
+		},
+		onDragCancel: () => {
+			setDraggingCellId(null);
+		}
+	});
+
 	Object.entries(schedules[activeDayId] || {}).forEach(([cellId, lesson]) => {
-		if (lesson?.duration && lesson.duration > 1) {
+		if (lesson?.duration && lesson.duration > 1 && cellId !== draggingCellId) {
 			const [groupId, timeId] = cellId.split("-");
 			const timeStartIdx = timeSlots.findIndex(t => t.id === timeId);
 
@@ -56,7 +70,7 @@ const MainTable = () => {
 					{timeSlots.map((time, timeIdx) => {
 						const cellId = `${group.id}-${time.id}`;
 
-						if (occupiedCells.has(cellId)) return null;
+						if (occupiedCells.has(cellId) && cellId !== draggingCellId) return null;
 
 						return (
 							<DroppableCell

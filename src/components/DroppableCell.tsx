@@ -1,5 +1,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import LessonCard from './Card/LessonCard';
+import { useDndMonitor } from '@dnd-kit/core';
+import { useState } from 'react';
 
 type DroppedLesson = {
 	id: string;
@@ -18,8 +20,23 @@ type DroppableCellProps = {
 
 const DroppableCell = ({ id, lesson, col }: DroppableCellProps) => {
 	const { setNodeRef, isOver } = useDroppable({ id });
+	const [isDragging, setIsDragging] = useState(false);
 
-	const gridStyleMerged = lesson?.duration && lesson.duration > 1
+	useDndMonitor({
+		onDragStart: (event) => {
+			if (event.active.id === id) {
+				setIsDragging(true);
+			}
+		},
+		onDragEnd: () => {
+			setIsDragging(false);
+		},
+		onDragCancel: () => {
+			setIsDragging(false);
+		}
+	});
+
+	const gridStyleMerged = lesson?.duration && lesson.duration > 1 && !isDragging
 		? { gridColumn: `${col} / ${col + lesson.duration}` }
 		: {};
 

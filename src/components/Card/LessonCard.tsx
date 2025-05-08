@@ -28,9 +28,18 @@ const durationOptions = [
 
 const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	const { activeDayId, schedules, addLessonToCell } = useScheduleStore();
-	const { attributes, listeners, setNodeRef, transform } = useDraggable({
+	const [cardWidth, setCardWidth] = useState<number | null>(null);
+
+	const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
 		id,
-		data: { title: subject.title, color: subject.color },
+		data: {
+			title: subject.title,
+			color: subject.color,
+			teacher: subject.teacher,
+			room: subject.room,
+			duration: subject.duration || 1,
+			originalId: id
+		},
 	});
 
 	const [showWarning, setShowWarning] = useState(false);
@@ -46,12 +55,19 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 
 	const cardRef = useRef<HTMLDivElement>(null);
 
+	useEffect(() => {
+		if (cardRef.current && !cardWidth) {
+			setCardWidth(cardRef.current.offsetWidth);
+		}
+	}, [cardRef.current]);
+
 	const style = {
 		transform: transform
 			? `translate(${transform.x}px, ${transform.y}px)`
-			: undefined,
+			: '',
 		backgroundColor: subject.color,
 		minWidth: editMode ? '215px' : '',
+		width: isDragging && cardWidth ? `${cardWidth}px` : ''
 	};
 
 	const handleDoubleClick = () => {
@@ -88,7 +104,7 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 
 	const handleSave = () => {
 		if (!canExtendLesson(id, selectedDuration, schedules[activeDayId])) {
-			alert("⛔ Невозможно установить такую длительность — следующие ячейки заняты!");
+			alert("⛔ Unable to set such duration — the following cells are occupied!");
 
 			const previousDuration = schedules[activeDayId]?.[id]?.duration || 1;
 
@@ -215,7 +231,7 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 				onDoubleClick={handleDoubleClick}
 				duration-data={subject?.duration}
 			>
-				<div className='item_title'>{subject.title}</div>
+				<div className='item_title' style={{ textAlign: isInTable ? 'center' : 'left' }}>{subject.title}</div>
 				{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
 				{subject.room && <div className='small_text'>{subject.room}</div>}
 			</div>
