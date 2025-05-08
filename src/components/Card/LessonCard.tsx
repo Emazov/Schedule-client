@@ -27,8 +27,9 @@ const durationOptions = [
 ];
 
 const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
-	const { activeDayId, schedules, addLessonToCell } = useScheduleStore();
+	const { activeDayId, schedules, addLessonToCell, userRole } = useScheduleStore();
 	const [cardWidth, setCardWidth] = useState<number | null>(null);
+	const isAdmin = userRole === 'admin';
 
 	const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
 		id,
@@ -71,6 +72,8 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	};
 
 	const handleDoubleClick = () => {
+		if (!isAdmin) return;
+
 		if (!isInTable) {
 			setShowWarning(true);
 			setTimeout(() => setShowWarning(false), 2000);
@@ -224,10 +227,10 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 			<div
 				ref={setNodeRef}
 				style={style}
-				{...listeners}
-				{...attributes}
+				{...(isAdmin ? listeners : {})}
+				{...(isAdmin ? attributes : {})}
 				id={`${subject.id}-${id}`}
-				className='lessons_item no_select'
+				className={`lessons_item no_select ${!isAdmin ? 'no-drag' : ''}`}
 				onDoubleClick={handleDoubleClick}
 				duration-data={subject?.duration}
 			>

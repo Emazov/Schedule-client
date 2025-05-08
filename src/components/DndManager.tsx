@@ -8,14 +8,19 @@ interface DndManagerProps {
 }
 
 const DndManager: React.FC<DndManagerProps> = ({ children }) => {
-	const { schedules, activeDayId, addLessonToCell, removeLessonFromCell, swapLessons } = useScheduleStore();
+	const { schedules, activeDayId, addLessonToCell, removeLessonFromCell, swapLessons, userRole } = useScheduleStore();
 	const [activeData, setActiveData] = useState<any>(null);
 
+	const isEditingAllowed = userRole === 'admin';
+
 	const handleDragStart = (event: DragStartEvent) => {
+		if (!isEditingAllowed) return;
 		setActiveData(event.active.data.current);
 	};
 
 	const handleDragEnd = (event: DragEndEvent) => {
+		if (!isEditingAllowed) return;
+
 		const { active, over } = event;
 
 		if (!over) return;

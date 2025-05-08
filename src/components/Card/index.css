@@ -5,6 +5,10 @@
 	cursor: pointer;
 }
 
+.no-drag {
+	cursor: default;
+}
+
 .input {
 	width: 100%;
 	padding: 4px;

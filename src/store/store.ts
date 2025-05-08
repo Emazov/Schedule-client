@@ -13,9 +13,13 @@ type Schedule = {
 	[cellId: string]: Lesson | null;
 };
 
+type UserRole = 'admin' | 'teacher' | 'student';
+
 type ScheduleStore = {
 	schedules: { [dayId: string]: Schedule };
 	activeDayId: string;
+	userRole: UserRole;
+	setUserRole: (role: UserRole) => void;
 	setActiveDay: (dayId: string) => void;
 	addLessonToCell: (dayId: string, cellId: string, lesson: Lesson) => void;
 	removeLessonFromCell: (dayId: string, cellId: string) => void;
@@ -33,7 +37,10 @@ export const useScheduleStore = create<ScheduleStore>((set) => ({
 		return acc;
 	}, {} as { [dayId: string]: Schedule }),
 	activeDayId: daysOfWeek[0].id,
+	userRole: 'admin',
 	availableLessons: [...defaultTasks],
+
+	setUserRole: (role) => set({ userRole: role }),
 
 	setActiveDay: (dayId) => set({ activeDayId: dayId }),
 
