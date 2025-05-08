@@ -7,7 +7,7 @@ import { useScheduleStore } from '../../store/store.ts';
 import { daysOfWeek, timeSlots, groups } from '../../defaultData';
 
 const MainTable = () => {
-	const { activeDayId, setActiveDay, schedules, userRole } = useScheduleStore();
+	const { activeDayId, setActiveDay, schedules } = useScheduleStore();
 	const [draggingCellId, setDraggingCellId] = useState<string | null>(null);
 
 	const occupiedCells = new Set<string>();
