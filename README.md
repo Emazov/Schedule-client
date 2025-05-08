@@ -34,7 +34,7 @@ AIU Schedule is a web application for managing class schedules in educational in
    ```bash
    npm run dev
    ```
-5. **Open the application in the browser** at `http://localhost:3000`.
+5. **Open the application in the browser** at `http://localhost:5173` or yours.
 
 ## Usage
 1. **Select a role**: Upon the first launch of the application, select your role (administrator, teacher, or student) from the dropdown list at the top of the screen.
@@ -50,5 +50,5 @@ If you want to contribute to the project, follow these steps:
 3. Create a pull request with a description of the changes made.
 
 ## Contacts 
-- telegram: emazovdev
+- telegram: @emazovdev
 - gmail: emir.almazov10@gmail.com
