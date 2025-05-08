@@ -9,7 +9,6 @@ import { daysOfWeek, timeSlots, groups } from '../../defaultData';
 const MainTable = () => {
 	const { activeDayId, setActiveDay, schedules, userRole } = useScheduleStore();
 	const [draggingCellId, setDraggingCellId] = useState<string | null>(null);
-	const isAdmin = userRole === 'admin';
 
 	const occupiedCells = new Set<string>();
 
