@@ -1,12 +1,15 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
+import { useScheduleStore } from '../../store/store';
+import { daysOfWeek } from '../../defaultData';
 
 const roles = ['admin', 'teacher', 'student'];
 
 const Header = () => {
-	const [headerRole, setHeaderRole] = useState('admin');
+	const { userRole, setUserRole, setActiveDay } = useScheduleStore();
 
 	const handleChangeRole = (e: ChangeEvent<HTMLSelectElement>) => {
-		setHeaderRole(e.target.value);
+		setUserRole(e.target.value as 'admin' | 'teacher' | 'student');
+		setActiveDay(daysOfWeek[0].id);
 	};
 	return (
 		<header className='header w-full bg-white'>
@@ -16,7 +19,7 @@ const Header = () => {
 				<select
 					className='header_btn cursor-pointer uppercase outline-0'
 					name='role'
-					value={headerRole}
+					value={userRole}
 					onChange={handleChangeRole}
 				>
 					{roles.map((role) => (

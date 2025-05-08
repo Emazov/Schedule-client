@@ -1,5 +1,8 @@
 import { useDroppable } from '@dnd-kit/core';
 import LessonCard from './Card/LessonCard';
+import { useDndMonitor } from '@dnd-kit/core';
+import { useState } from 'react';
+import { useScheduleStore } from '../store/store';
 
 type DroppedLesson = {
 	id: string;
@@ -18,12 +21,29 @@ type DroppableCellProps = {
 
 const DroppableCell = ({ id, lesson, col }: DroppableCellProps) => {
 	const { setNodeRef, isOver } = useDroppable({ id });
+	const [isDragging, setIsDragging] = useState(false);
+	const { userRole } = useScheduleStore();
+	const isAdmin = userRole === 'admin';
 
-	const gridStyleMerged = lesson?.duration && lesson.duration > 1
+	useDndMonitor({
+		onDragStart: (event) => {
+			if (event.active.id === id) {
+				setIsDragging(true);
+			}
+		},
+		onDragEnd: () => {
+			setIsDragging(false);
+		},
+		onDragCancel: () => {
+			setIsDragging(false);
+		}
+	});
+
+	const gridStyleMerged = lesson?.duration && lesson.duration > 1 && !isDragging
 		? { gridColumn: `${col} / ${col + lesson.duration}` }
 		: {};
 
-	const backgroundHighlight = isOver
+	const backgroundHighlight = isOver && isAdmin
 		? { backgroundColor: 'rgba(0, 0, 0, 0.1)' }
 		: {};
 

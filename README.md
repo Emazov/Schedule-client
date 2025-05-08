@@ -1,54 +1,54 @@
-# React + TypeScript + Vite
+# AIU Schedule
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
+AIU Schedule is a web application for managing class schedules in educational institutions. The application allows users to add, edit, and delete lessons, as well as manage user roles (administrator, teacher, student). The application is developed using modern technologies, ensuring high performance and ease of use.
 
-Currently, two official plugins are available:
+## Technologies
+- **React**: A library for building user interfaces, allowing the creation of interactive web applications.
+- **TypeScript**: A programming language that adds static typing to JavaScript, helping to avoid errors during development.
+- **Vite**: A build and development tool for applications, providing fast reloading and optimization.
+- **Zustand**: A lightweight library for managing application state, allowing easy management of global state.
+- **@dnd-kit/core**: A library for implementing drag-and-drop functionality, enabling users to conveniently move lessons in the schedule.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Functionality
+- **Adding new lessons**: Users can add new lessons by specifying the title, color, teacher, and classroom.
+- **Editing existing lessons**: Lessons can be edited by changing their parameters, such as title, teacher, and duration.
+- **Dragging lessons**: Lessons can be dragged between schedule cells, making it easy to change class times.
+- **Managing user roles**: Administrators can manage user roles, granting or restricting access to certain application features.
+- **Visual notifications**: The application displays notifications about duplicate lessons and other important events.
 
-## Expanding the ESLint configuration
+## Installation
+1. **Clone the repository**:
+   ```bash
+   git clone <repository_URL>
+   ```
+2. **Navigate to the project directory**:
+   ```bash
+   cd <directory_name>
+   ```
+3. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+4. **Run the project**:
+   ```bash
+   npm run dev
+   ```
+5. **Open the application in the browser** at `http://localhost:5173` or yours.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Usage
+1. **Select a role**: Upon the first launch of the application, select your role (administrator, teacher, or student) from the dropdown list at the top of the screen.
+2. **Adding lessons**: In the left panel, enter the title of the new lesson and click the "Add" button. The lesson will appear in the list of available lessons.
+3. **Dragging lessons**: Drag lessons from the available lessons panel into the schedule. Ensure that the cell is free to place the lesson.
+4. **Editing lessons**: Double-click on a lesson in the schedule to enter edit mode. Make changes and save them.
+5. **Deleting lessons**: Lessons can be deleted by clicking the delete button next to each lesson in the list of available lessons.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Contribution
+If you want to contribute to the project, follow these steps:
+1. Fork the repository.
+2. Make changes in your branch.
+3. Create a pull request with a description of the changes made.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Contacts 
+- telegram:  https://t.me/emazovdev
+- gmail: emir.almazov10@gmail.com
