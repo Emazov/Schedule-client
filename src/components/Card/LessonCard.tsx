@@ -238,6 +238,7 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 				onDoubleClick={handleDoubleClick}
 				duration-data={subject?.duration}
 			>
+				{isInTable && <div className='item_span'></div>}
 				<div className='item_title' style={{ textAlign: isInTable ? 'center' : 'left' }}>{subject.title}</div>
 				{!isDragging && subject.teacher && <div className='small_text'>{subject.teacher}</div>}
 				{!isDragging && subject.room && <div className='small_text'>{subject.room}</div>}
