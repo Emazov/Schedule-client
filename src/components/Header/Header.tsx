@@ -1,13 +1,15 @@
 import { ChangeEvent } from 'react';
 import { useScheduleStore } from '../../store/store';
+import { daysOfWeek } from '../../defaultData';
 
 const roles = ['admin', 'teacher', 'student'];
 
 const Header = () => {
-	const { userRole, setUserRole } = useScheduleStore();
+	const { userRole, setUserRole, setActiveDay } = useScheduleStore();
 
 	const handleChangeRole = (e: ChangeEvent<HTMLSelectElement>) => {
 		setUserRole(e.target.value as 'admin' | 'teacher' | 'student');
+		setActiveDay(daysOfWeek[0].id);
 	};
 	return (
 		<header className='header w-full bg-white'>

@@ -30,8 +30,9 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 	const { activeDayId, schedules, addLessonToCell, userRole } = useScheduleStore();
 	const [cardWidth, setCardWidth] = useState<number | null>(null);
 	const isAdmin = userRole === 'admin';
+	const [isDragging, setIsDragging] = useState(false);
 
-	const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+	const { attributes, listeners, setNodeRef, transform, isDragging: dragging } = useDraggable({
 		id,
 		data: {
 			title: subject.title,
@@ -61,6 +62,10 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 			setCardWidth(cardRef.current.offsetWidth);
 		}
 	}, [cardRef.current]);
+
+	useEffect(() => {
+		setIsDragging(dragging);
+	}, [dragging]);
 
 	const style = {
 		transform: transform
@@ -235,8 +240,8 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 				duration-data={subject?.duration}
 			>
 				<div className='item_title' style={{ textAlign: isInTable ? 'center' : 'left' }}>{subject.title}</div>
-				{subject.teacher && <div className='small_text'>{subject.teacher}</div>}
-				{subject.room && <div className='small_text'>{subject.room}</div>}
+				{!isDragging && subject.teacher && <div className='small_text'>{subject.teacher}</div>}
+				{!isDragging && subject.room && <div className='small_text'>{subject.room}</div>}
 			</div>
 
 			{showWarning && (
