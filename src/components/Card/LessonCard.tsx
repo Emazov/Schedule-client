@@ -73,7 +73,6 @@ const LessonCard = ({ id, subject, isInTable }: LessonCardProps) => {
 			: '',
 		backgroundColor: subject.color,
 		minWidth: editMode ? '215px' : '',
-		width: isDragging && cardWidth ? `${cardWidth}px` : ''
 	};
 
 	const handleDoubleClick = () => {
