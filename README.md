@@ -50,5 +50,5 @@ If you want to contribute to the project, follow these steps:
 3. Create a pull request with a description of the changes made.
 
 ## Contacts 
-- telegram:  https://t.me/emazovdev
-- gmail: emir.almazov10@gmail.com
+- Telegram:  https://t.me/emazovdev
+- Gmail: emir.almazov10@gmail.com
